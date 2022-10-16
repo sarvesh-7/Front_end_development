@@ -3,35 +3,31 @@ import {useState} from 'react';
 
 function ExpenseForm(){
     //register states for expense amount, title and date
-    // const [enteredTitle, setEnteredTitle] = useState('');
-    // const [enteredAmount, setEnteredAmount] = useState('');
-    // const [enteredDate, setEnteredExpDate] = useState('');
+    const [enteredTitle, setEnteredTitle] = useState('');
+    const [enteredAmount, setEnteredAmount] = useState('');
+    const [enteredDate, setEnteredExpDate] = useState('');
 
     //event handler for form submit action
     function onSubmit(e){
         e.preventDefault();
-        const expTitle = document.getElementById('exp_title').value;
-        const expAmount = document.getElementById('exp_amt').value;
-        const expDate = document.getElementById('exp_date').value;
-
         let userInputObj = {
-            title : expTitle,
-            amount : expAmount,
-            date : expDate
+            title : enteredTitle,
+            amount : enteredAmount,
+            date : enteredDate
         }
         console.log(userInputObj);
     }
 
-    const [userInput, setUserInput] = useState( {
-        enteredTitle : '',
-        enteredAmount : '',
-        enteredDate : ''
-    }
-    );
+    // const [userInput, setUserInput] = useState( {
+    //     enteredTitle : '',
+    //     enteredAmount : '',
+    //     enteredDate : ''
+    // }
+    // );
 
     //update expense amount, title and date states when user make changes in the input fields
     function changeTitleHandler(e){
-        // setEnteredTitle(e.target.value);
+        setEnteredTitle(e.target.value);
         // setUserInput({
         //     ...userInput,
         //     enteredTitle : e.target.value
@@ -39,7 +35,7 @@ function ExpenseForm(){
     }
 
     function changeAmountHandler(e){
-        // setEnteredAmount(e.target.value);
+        setEnteredAmount(e.target.value);
         // setUserInput({
         //     ...userInput,
         //     enteredTitle : e.target.value
@@ -47,7 +43,7 @@ function ExpenseForm(){
     }
 
     function changeDateHandler(e){
-        // setEnteredExpDate(e.target.value);
+        setEnteredExpDate(e.target.value);
         // setUserInput({
         //     ...userInput,
         //     enteredTitle : e.target.value
