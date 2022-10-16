@@ -7,6 +7,21 @@ function ExpenseForm(){
     // const [enteredAmount, setEnteredAmount] = useState('');
     // const [enteredDate, setEnteredExpDate] = useState('');
 
+    //event handler for form submit action
+    function onSubmit(e){
+        e.preventDefault();
+        const expTitle = document.getElementById('exp_title').value;
+        const expAmount = document.getElementById('exp_amt').value;
+        const expDate = document.getElementById('exp_date').value;
+
+        let userInputObj = {
+            title : expTitle,
+            amount : expAmount,
+            date : expDate
+        }
+        console.log(userInputObj);
+    }
+
     const [userInput, setUserInput] = useState( {
         enteredTitle : '',
         enteredAmount : '',
@@ -17,31 +32,31 @@ function ExpenseForm(){
     //update expense amount, title and date states when user make changes in the input fields
     function changeTitleHandler(e){
         // setEnteredTitle(e.target.value);
-        setUserInput({
-            ...userInput,
-            enteredTitle : e.target.value
-        });
+        // setUserInput({
+        //     ...userInput,
+        //     enteredTitle : e.target.value
+        // });
     }
 
     function changeAmountHandler(e){
         // setEnteredAmount(e.target.value);
-        setUserInput({
-            ...userInput,
-            enteredTitle : e.target.value
-        });
+        // setUserInput({
+        //     ...userInput,
+        //     enteredTitle : e.target.value
+        // });
     }
 
     function changeDateHandler(e){
         // setEnteredExpDate(e.target.value);
-        setUserInput({
-            ...userInput,
-            enteredTitle : e.target.value
-        });
+        // setUserInput({
+        //     ...userInput,
+        //     enteredTitle : e.target.value
+        // });
     }
 
     //return a form to add new expenses
     return(
-        <form>
+        <form onSubmit={onSubmit}>
         <div className="new-expense__controls">
         <div className="new-expense__controls">
         <label htmlFor="exp_title">Expense Title</label>
