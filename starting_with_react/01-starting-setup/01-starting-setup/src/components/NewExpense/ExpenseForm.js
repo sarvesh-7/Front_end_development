@@ -3,21 +3,40 @@ import {useState} from 'react';
 
 function ExpenseForm(){
     //register states for expense amount, title and date
-    const [enteredTitle, setEnteredTitle] = useState('');
-    const [enteredAmount, setEnteredAmount] = useState('');
-    const [enteredDate, setEnteredExpDate] = useState('');
+    // const [enteredTitle, setEnteredTitle] = useState('');
+    // const [enteredAmount, setEnteredAmount] = useState('');
+    // const [enteredDate, setEnteredExpDate] = useState('');
+
+    const [userInput, setUserInput] = useState( {
+        enteredTitle : '',
+        enteredAmount : '',
+        enteredDate : ''
+    }
+    );
 
     //update expense amount, title and date states when user make changes in the input fields
     function changeTitleHandler(e){
-        setEnteredTitle(e.target.value);
+        // setEnteredTitle(e.target.value);
+        setUserInput({
+            ...userInput,
+            enteredTitle : e.target.value
+        });
     }
 
     function changeAmountHandler(e){
-        setEnteredAmount(e.target.value);
+        // setEnteredAmount(e.target.value);
+        setUserInput({
+            ...userInput,
+            enteredTitle : e.target.value
+        });
     }
 
     function changeDateHandler(e){
-        setEnteredExpDate(e.target.value);
+        // setEnteredExpDate(e.target.value);
+        setUserInput({
+            ...userInput,
+            enteredTitle : e.target.value
+        });
     }
 
     //return a form to add new expenses
