@@ -35,7 +35,11 @@ const App = () => {
 const [expArray, setExpArray] = useState(expenses);
 
 const addExpense = expense =>{
-    setExpArray([...expArray, expense]); //update expense array state by adding new expense
+    setExpArray( (expArray) =>
+    {
+        return [expense, ...expArray]; //update expense array state by adding new expense
+    })
+       
 }
     return (
         <div>
