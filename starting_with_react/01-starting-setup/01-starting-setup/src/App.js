@@ -38,7 +38,8 @@ const addExpense = expense =>{
     setExpArray( (expArray) =>
     {
         return [expense, ...expArray]; //update expense array state by adding new expense
-    })
+    });
+    // setExpArray([expense, ...expArray]);
        
 }
     return (
