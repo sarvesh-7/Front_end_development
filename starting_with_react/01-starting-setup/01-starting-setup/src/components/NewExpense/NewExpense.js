@@ -4,8 +4,10 @@ import {useState} from 'react';
 
 const NewExpense = (props) => {
 
-    //set state for add new expense button
-    const[addExpBtn,setClicked] = useState('');
+    //set state to check if user is editing form or not
+    const[isEditing,setIsEditing] = useState(false);
+
+    //variable to store JSX code to be rendered on screen
     let expComp;
 
     const saveExpenseData = (expenseDataObj) =>{
@@ -14,19 +16,20 @@ const NewExpense = (props) => {
             ...expenseDataObj  
         }
         props.onAddExpense(expenseData);
+        setIsEditing(false);
     }
 
     const clickHandler = e =>{
-        setClicked('clicked');
+        setIsEditing(true);
     }
 
-    const cancelExpense = ()=>{
-        setClicked('');
+    const cancelEditing = ()=>{
+        setIsEditing(false);
     }
 
-    //if button is clicked then display form by re - rendering this component
-    if(addExpBtn==='clicked'){
-        expComp = <ExpenseForm onSaveExpenseData = {saveExpenseData} onCancelExpense = {cancelExpense}/>;
+    //if add new expense button is clicked then display form by re - rendering this component
+    if(isEditing){
+        expComp = <ExpenseForm onSaveExpenseData = {saveExpenseData} onCancelEditing = {cancelEditing}/>;
     }
     //display button initially when the component loads first time or when clicked on cancel button
     else{

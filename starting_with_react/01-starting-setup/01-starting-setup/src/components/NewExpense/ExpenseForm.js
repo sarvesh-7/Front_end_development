@@ -8,7 +8,7 @@ function ExpenseForm(props){
     const [enteredDate, setEnteredExpDate] = useState('');
 
     //event handler for form submit action
-    function onSubmit(e){
+    const onSubmit = e => {
         e.preventDefault();
         let userInputObj = {
             title : enteredTitle,
@@ -23,20 +23,16 @@ function ExpenseForm(props){
     }
 
     //update expense amount, title and date states when user make changes in the input fields
-    function changeTitleHandler(e){
+    const changeTitleHandler = e=>{
         setEnteredTitle(e.target.value);
     }
 
-    function changeAmountHandler(e){
+    const changeAmountHandler = e => {
         setEnteredAmount(e.target.value);
     }
 
-    function changeDateHandler(e){
+    const changeDateHandler =  e => {
         setEnteredExpDate(e.target.value);
-    }
-
-    function cancelExpenseHandler(e){
-        props.onCancelExpense();
     }
 
     //return a form to add new expenses
@@ -60,7 +56,7 @@ function ExpenseForm(props){
         </div>
 
         <div className="new-expense__actions">
-        <button onClick = {cancelExpenseHandler}>Cancel</button>    
+        <button onClick = {props.onCancelEditing}>Cancel</button>    
         <button type="submit">Add Expenses</button>
         </div>
 
