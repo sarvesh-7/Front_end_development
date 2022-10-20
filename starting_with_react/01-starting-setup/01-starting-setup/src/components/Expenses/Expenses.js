@@ -3,41 +3,33 @@ import Card from '../UI/card.js';
 import ExpensesFilter from './ExpenseFilter';
 import {useState} from 'react';
 import ExpensesList from './ExpensesList';
+import ExpenseChart from './ExpenseChart';
+
 const Expenses = (props) => {
 
+    //maintain state for the filtered year
     const [year, setYear] = useState('2021');
     var expFilteredArr = props.items;
-    // let expContent;
-    // let expMessage;
 
+    //update year state
     const changeYear = year =>{
         setYear(year);
     }
 
+    //filter array based on year selected from dropdown
         expFilteredArr = props.items.filter(expense=>{
             return expense.date.getFullYear() == year;
         });
 
-        // if(expFilteredArr.length===0){
-        //     expContent = <p>No expenses found </p>;
-        // }
-        // else{
-        //     expContent = expFilteredArr.map((item)=>{
-        //         return <ExpenseItem key = {item.id} title = {item.title} amount = {item.amount} date = {item.date}/> 
-        //     });
-        // }
-
-        // if(expFilteredArr.length === 1){
-        //     expMessage = <p> Only single Expense here. Please add more...</p>;
-        // }
-
     return(
         <div>
         <Card className="expenses">
+        {/*expense filter component */}
         <ExpensesFilter selected = {year} onChangeYear = {changeYear} />
-            {/* {expContent}
-            {expMessage} */}
-            <ExpensesList items={expFilteredArr}/>
+        {/* display expense chart for filtered year */}
+        <ExpenseChart expenses = {expFilteredArr} />
+        {/* display filtered expense list */}
+            <ExpensesList items={expFilteredArr}/> 
         </Card>
         </div>
         
