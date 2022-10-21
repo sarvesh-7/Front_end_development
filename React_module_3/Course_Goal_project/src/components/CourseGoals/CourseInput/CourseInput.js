@@ -29,7 +29,7 @@ const CourseInput = props => {
         <label>Course Goal</label>
         <input type="text" onChange={goalInputChangeHandler} />
       </div>
-      <Button isValidState = {isValid} type="submit">Add Goal</Button>
+      <Button isValidState = {isValid} type="submit">Add Goals</Button>
     </form>
   );
 };
