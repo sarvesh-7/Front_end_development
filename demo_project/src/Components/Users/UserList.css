@@ -1,0 +1,10 @@
+* {
+    box-sizing: border-box;
+  }
+.list_item_style{
+    border : 1px solid grey;
+    width: 100%;
+    margin-bottom: 5px;
+    list-style: none;
+    padding: 5px;
+}

@@ -1,0 +1,15 @@
+.btn{
+    background-color: #4f005f;
+    padding : 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border: 1px solid #4f005f;
+}
+
+.btn:hover, .btn:active{
+    background: #741188;
+    border-color: #741188;
+}
+
+  
