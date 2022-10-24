@@ -1,8 +1,9 @@
-import {useState} from 'react';
+import {useState,Fragment} from 'react';
 import Modal from '../UI/Modal';
 import './UserForm.css';
 import Card from '../UI/Card';
 import Button from '../UI/Button';
+// import Wrapper from '../Helper/Wrapper';
 
 const UserForm = (props)=>{
 
@@ -56,7 +57,7 @@ const UserForm = (props)=>{
     }
 
     return (
-        <div>
+        <Fragment>
         <Card>
         <form className = 'form-content' onSubmit = {onSubmitHandler}>
             <label>Username</label><br/>
@@ -68,7 +69,7 @@ const UserForm = (props)=>{
         </Card>
         {errorModel && <Modal title = {errorModel.title}
         message = {errorModel.message} closeModal = {closeModal}/>} 
-        </div>
+        </Fragment>
     )
 };
 
