@@ -8,8 +8,8 @@ function App() {
   const[userDet , setUserDet] = useState([]);
 
   //submit user details
-  const submitUserDetails = (userName, userAge)=>{
-    setUserDet([...userDet, {name : userName, age : userAge, id : Math.random().toString() }]);
+  const submitUserDetails = (userName, userAge,userCollege)=>{
+    setUserDet([...userDet, {name : userName, age : userAge, id : Math.random().toString(), college : userCollege }]);
   }
   return (
     <div>
