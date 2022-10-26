@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import AuthContext from '../store/auth-context';
+import Input from '../UI/Input/Input';
 
 //reducer function which will return a new state for email and its validity
 const emailReducer = (state, action) =>{
@@ -57,6 +59,8 @@ const Login = (props) => {
    //manage entered college state and its validity state together using useReducer()
 
    const[collegeState, collegeDispatcher] = useReducer(collegeReducer, {value : '', isValid : true})
+
+   const ctx = useContext(AuthContext);
   
 
   // useEffect(()=>{
@@ -115,7 +119,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    ctx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
@@ -127,7 +131,7 @@ const Login = (props) => {
           }`}
         >
           <label htmlFor="email">E-Mail</label>
-          <input
+          <Input
             type="email"
             id="email"
             value={emailState.value}
@@ -142,7 +146,7 @@ const Login = (props) => {
           }`}
         >
           <label htmlFor="college">College</label>
-          <input
+          <Input
             type="text"
             id="college"
             value={collegeState.value}
@@ -156,7 +160,7 @@ const Login = (props) => {
           }`}
         >
           <label htmlFor="password">Password</label>
-          <input
+          <Input
             type="password"
             id="password"
             value={passwordState.value}
