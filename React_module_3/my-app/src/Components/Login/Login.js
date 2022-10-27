@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useContext } from 'react';
+import React, { useState, useEffect, useReducer, useContext, useRef} from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -50,15 +50,15 @@ const Login = (props) => {
 
   //manage entered email state and its validity state together using useReducer()
 
-  const[emailState, emailDispatcher] = useReducer(emailReducer, {value : '', isValid : true});
+  const[emailState, emailDispatcher] = useReducer(emailReducer, {value : '', isValid : null});
 
   //manage entered password state and its validity state together using useReducer()
 
-  const[passwordState, passwordDispatcher] = useReducer(passwordReducer, {value : '', isValid : true});
+  const[passwordState, passwordDispatcher] = useReducer(passwordReducer, {value : '', isValid : null});
 
    //manage entered college state and its validity state together using useReducer()
 
-   const[collegeState, collegeDispatcher] = useReducer(collegeReducer, {value : '', isValid : true})
+   const[collegeState, collegeDispatcher] = useReducer(collegeReducer, {value : '', isValid : null})
 
    const ctx = useContext(AuthContext);
   
@@ -117,15 +117,24 @@ const Login = (props) => {
     passwordDispatcher({type : 'INPUT_BLUR'});
   };
 
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
   const submitHandler = (event) => {
     event.preventDefault();
+    if(formIsValid)
     ctx.onLogin(emailState.value, passwordState.value);
+    else if(!emailState.isValid)
+    emailRef.current.focus();
+    else if(!passwordState.isValid)
+    passwordRef.current.focus();
   };
 
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>  
           <Input
+            ref={emailRef}
             type="email"
             id="email"
             value={emailState.value}
@@ -145,6 +154,7 @@ const Login = (props) => {
             onBlur={validateCollegeHandler}
           />
           <Input
+            ref={passwordRef}
             type="password"
             id="password"
             value={passwordState.value}
@@ -154,7 +164,7 @@ const Login = (props) => {
             onBlur={validatePasswordHandler}
           />
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>
