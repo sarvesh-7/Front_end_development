@@ -124,50 +124,35 @@ const Login = (props) => {
 
   return (
     <Card className={classes.login}>
-      <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            emailState.isValid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
+      <form onSubmit={submitHandler}>  
           <Input
             type="email"
             id="email"
             value={emailState.value}
+            isValid={emailState.isValid}
+            label="Email"
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
           />
-        </div>
         {/* Add extra field for college along with required validations */}
-        <div
-          className={`${classes.control} ${
-            collegeState.isValid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="college">College</label>
           <Input
             type="text"
             id="college"
             value={collegeState.value}
+            isValid={collegeState.isValid}
+            label="College"
             onChange={collegeChangeHandler}
             onBlur={validateCollegeHandler}
           />
-        </div>
-        <div
-          className={`${classes.control} ${
-            passwordState.isValid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="password">Password</label>
           <Input
             type="password"
             id="password"
             value={passwordState.value}
+            isValid={passwordState.isValid}
+            label="Password"
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />
-        </div>
         <div className={classes.actions}>
           <Button type="submit" className={classes.btn} disabled={!formIsValid}>
             Login
