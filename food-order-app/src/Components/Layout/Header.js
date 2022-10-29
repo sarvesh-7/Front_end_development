@@ -1,19 +1,19 @@
-import './Header.css';
-import restuarantCover from '../Images/restaurant-cover.jpg';
+import classes from './Header.module.css';
+import mealsImg from '../../Assets/meals.jpg';
+import {Fragment} from 'react';
+import Button from './CartButton';
 
 const Header = ()=>{
 return (
-    <div>
-    <div className='header'>
-        <span className='header-title'>ReactMeals</span>
-        <div className='cart'>
-        <i className="material-icons">shopping_cart</i>
-        <span>Your Cart</span>
-        <div className='cart-value'>0</div>
-        </div>
+    <Fragment>
+    <header className={classes.header}>
+        <span className={classes['header-title']}>ReactMeals</span>
+        <Button></Button>
+    </header>
+    <div className={classes['main-image']}>
+    <img src={mealsImg} alt='An image full of delicios meals'/>
     </div>
-    <img src={restuarantCover}/>
-    </div>
+    </Fragment>
 )
 }
 export default Header;
