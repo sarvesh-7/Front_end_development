@@ -14,6 +14,7 @@
     text-align: center;
 }
 
+
 button:hover,
 button:active {
   background: #2c0d00;
@@ -32,6 +33,7 @@ i,button{
     padding:5px 20px;
     text-align: center;
 }
+
 
 button:hover .cart-value,
 button:active .cart-value {
