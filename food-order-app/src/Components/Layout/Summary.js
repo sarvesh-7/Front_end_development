@@ -1,4 +1,5 @@
 import classes from './Summary.module.css';
+//summary of the app
 const Summary = () =>{
     return(
       <div className={classes.summary}>
