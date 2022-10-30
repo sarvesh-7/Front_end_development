@@ -7,8 +7,8 @@ const Header = ()=>{
 return (
     <Fragment>
     <header className={classes.header}>
-        <span className={classes['header-title']}>ReactMeals</span>
-        <Button></Button>
+        <h1>ReactMeals</h1>
+        <Button/>
     </header>
     <div className={classes['main-image']}>
     <img src={mealsImg} alt='An image full of delicios meals'/>
