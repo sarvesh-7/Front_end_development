@@ -1,5 +1,5 @@
 import Header from './Components/Layout/Header';
-import Summary from './Components/Layout/Summary';
+import Summary from './Components/Meals/Summary';
 function App() {
   return (
     <div>
