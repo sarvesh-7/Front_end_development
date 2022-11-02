@@ -1,5 +1,6 @@
 import MealsItem from './MealsItem';
 import classes from './Meals.module.css';
+import Card from '../UI/Card';
 const Meals = ()=>{
 
     //An array of meals
@@ -31,11 +32,11 @@ const Meals = ()=>{
 
     ]
     return(
-        <div className = {classes.meals_card}>
+        <Card className = {classes.meals_card}>
             <ul>
             <MealsItem MealsArray = {MealsArray}/>
             </ul>
-        </div>
+        </Card>
      );
 }
 export default Meals;
