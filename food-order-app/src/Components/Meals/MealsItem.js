@@ -1,15 +1,21 @@
 import classes from './MealsItem.module.css';
+import AddItems from './AddItems';
 const MealsItem = (props)=>{
 
     return(
         props.MealsArray.map((Meal)=>{
             return(
-            <div>
-                <li className={classes.title}>{Meal.title}</li>
-                <li className={classes.desc}>{Meal.desc}</li>
-                <li className={classes.price}> ${Meal.price}</li>
-                <hr/>  
+            <li>   
+            <div className={classes.meals_item}>
+                <div>
+                <div className={classes.title}>{Meal.title}</div>
+                <div className={classes.desc}>{Meal.desc}</div>
+                <div className={classes.price}> ${Meal.price}</div>
+                </div>
+                <AddItems/>  
             </div>
+            <hr/>
+            </li>
             )
         })
     )

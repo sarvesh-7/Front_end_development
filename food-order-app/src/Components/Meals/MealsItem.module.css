@@ -2,6 +2,7 @@ ul{
     list-style: none;
     padding: 0;
     margin: 0;
+    padding: 1rem;
 }
 .title{
     font-weight: bold;
@@ -13,4 +14,9 @@ ul{
 .price{
     color:#8a2b06;
     font-weight: bold;
+}
+.meals_item{
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
 }

@@ -1,0 +1,24 @@
+.addButton{
+  cursor: pointer;
+  font: inherit;
+  border: none;
+  background-color: #8a2b06;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 0.2rem 1.5rem;
+  margin: 0 1rem 0 1rem;
+}
+.addButton:hover,
+.addButton:active {
+  background-color: #641e03;
+}
+.label{
+    font-weight: bold;
+}
+
+input{
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+  width:3rem;
+}
