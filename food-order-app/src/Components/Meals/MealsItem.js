@@ -12,7 +12,7 @@ const MealsItem = (props)=>{
                 <div className={classes.desc}>{Meal.desc}</div>
                 <div className={classes.price}> ${Meal.price}</div>
                 </div>
-                <AddItems/>  
+                <AddItems meal = {Meal}/>  
             </div>
             <hr/>
             </li>
