@@ -3,7 +3,7 @@ import classes from './Meals.module.css';
 import Card from '../UI/Card';
 const Meals = ()=>{
 
-    //An array of meals
+    //A dummy array of meals
     const MealsArray = [
         {
             id : 'M1',

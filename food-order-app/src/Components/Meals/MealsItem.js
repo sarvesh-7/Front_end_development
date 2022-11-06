@@ -1,11 +1,11 @@
 import classes from './MealsItem.module.css';
 import AddItems from './AddItems';
-const MealsItem = (props)=>{
 
+const MealsItem = (props)=>{
     return(
         props.MealsArray.map((Meal)=>{
             return(
-            <li>   
+            <li key={Meal.id}>   
             <div className={classes.meals_item}>
                 <div>
                 <div className={classes.title}>{Meal.title}</div>

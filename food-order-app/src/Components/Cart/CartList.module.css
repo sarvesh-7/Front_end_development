@@ -1,0 +1,38 @@
+.li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.8rem;
+  }
+
+  ul{
+      padding: 0;
+  }
+  
+  .changeQty{
+    font: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #8a2b06;
+    border-radius: 0.2rem; 
+    padding: 0.2rem 0.7rem;
+    margin-left: 0.5rem;
+  }
+  .price{
+    color: #8a2b06;
+    font-weight: bold;
+  }
+
+   button:hover,
+  .button:active {
+    background-color: #5a1a01;
+    border-color: #5a1a01;
+    color: white;
+  }
+
+  .qty{
+    border-radius: 0.2rem; 
+    padding: 0.2rem 0.7rem;
+    border: 1px solid grey;
+    margin-left: 1rem;
+  }

@@ -1,17 +1,18 @@
 import classes from './AddItems.module.css';
-import {useContext,useRef, useReducer} from 'react';
+import {useContext,useRef} from 'react';
 import CartContext from '../../Store/CartContext';
-import CartButton from '../Layout/CartButton';
 
 const AddItems = (props)=>{
     const itemAmt = useRef();
     const cartCtx = useContext(CartContext);
+
+    //add items to the cart when clicked on add button on each meal
     const addItemstoCart = (event)=>{
         event.preventDefault();
         if(itemAmt.current.value!=='')
         {
-            props.meal.quantity = Number(itemAmt.current.value);
-            cartCtx.addItem(props.meal);
+            props.meal.quantity = +itemAmt.current.value;
+            cartCtx.addItem(props.meal); //call context additem method to update context items array
         }   
     }
     return(
