@@ -1,4 +1,5 @@
 import classes from './Summary.module.css';
+import React from 'react';
 //summary of the app
 const Summary = () =>{
     return(
@@ -15,4 +16,4 @@ const Summary = () =>{
     )
 };
 
-export default Summary;
+export default React.memo(Summary);

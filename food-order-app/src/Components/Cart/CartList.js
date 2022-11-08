@@ -33,7 +33,7 @@ const CartList = (props)=>{
             <button className={classes.changeQty} onClick = {(e)=>{addQty(e,cartItem)}}>+</button>
         </div>
         </div>
-        <hr/>
+        <hr className={classes.hr}/>
         </li>
         ))}
         </ul>

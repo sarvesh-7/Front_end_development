@@ -1,5 +1,6 @@
 import classes from './MealsItem.module.css';
-import AddItems from './AddItems';
+import AddMealsForm from './AddMealsForm';
+import React from 'react';
 
 const MealsItem = (props)=>{
     return(
@@ -12,7 +13,7 @@ const MealsItem = (props)=>{
                 <div className={classes.desc}>{Meal.desc}</div>
                 <div className={classes.price}> ${Meal.price}</div>
                 </div>
-                <AddItems meal = {Meal}/>  
+                <AddMealsForm meal = {Meal}/>  
             </div>
             <hr/>
             </li>
@@ -20,4 +21,4 @@ const MealsItem = (props)=>{
         })
     )
 }
-export default MealsItem;
+export default React.memo(MealsItem);

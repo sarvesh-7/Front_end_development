@@ -1,11 +1,11 @@
-import classes from './AddItems.module.css';
+import classes from './AddMeals.module.css';
 import {useContext,useRef} from 'react';
 import CartContext from '../../Store/CartContext';
 
 const AddItems = (props)=>{
     const itemAmt = useRef();
     const cartCtx = useContext(CartContext);
-
+    
     //add items to the cart when clicked on add button on each meal
     const addItemstoCart = (event)=>{
         event.preventDefault();
@@ -18,7 +18,8 @@ const AddItems = (props)=>{
     return(
         <form>
             <label htmlFor='ItemAmt'>Amount</label>
-            <input type='number' ref={itemAmt} id='ItemAmt' min='1' step='1'/><br/>
+            <input type='number' ref={itemAmt} id='ItemAmt' min='1' max = '10' step='1' /> 
+            <br/>
             <button type='submit' onClick = {addItemstoCart} className={classes.addButton}>+ Add</button>
         </form>
     )

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0.8rem;
+    margin: 0.5rem;
   }
 
   ul{
@@ -35,4 +35,8 @@
     padding: 0.2rem 0.7rem;
     border: 1px solid grey;
     margin-left: 1rem;
+  }
+
+  .hr{
+    border-color: #bb3a08;
   }
