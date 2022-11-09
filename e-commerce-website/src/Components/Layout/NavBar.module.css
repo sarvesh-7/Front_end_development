@@ -1,0 +1,32 @@
+.NavBar{
+    display: fixed;
+    top:0;
+    left:0;
+    background-color: black;
+    width:100%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  
+}
+
+.menus{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0.5rem 1rem 0.5rem;
+    color: white;
+}
+
+.menu_action{
+    margin: 0 1rem 0 ;
+    cursor: pointer;
+}
+.button{
+    background-color: transparent;
+    border-color: skyblue;
+    border-radius:10px;
+    color:white;
+    padding: 0.3rem 1rem 0.3rem;
+    cursor: pointer;
+}
+

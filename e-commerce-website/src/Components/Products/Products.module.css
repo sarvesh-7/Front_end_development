@@ -1,0 +1,15 @@
+.products{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.showcart{
+    background: rgb(85, 84, 84);
+    color:rgb(39, 141, 182);
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
