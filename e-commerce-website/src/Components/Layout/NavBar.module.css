@@ -1,13 +1,23 @@
 .NavBar{
-    display: fixed;
+    position: fixed;
     top:0;
     left:0;
     background-color: black;
     width:100%;
+    height: 4rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-  
+    z-index: 10;
 }
+.empty_div{
+    position: relative;
+    top:0;
+    left:0;
+    width:100%;
+    height: 4rem;
+    z-index: 10; 
+}
+
 
 .menus{
     display: flex;

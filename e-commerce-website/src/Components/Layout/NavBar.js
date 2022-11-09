@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './NavBar.module.css';
 const NavBar = props=>{
 return(
+    <div className={classes.empty_div}>
     <div className={classes.NavBar}>
         <div className={classes.menus}>
             <div>
@@ -11,6 +12,7 @@ return(
             </div>
             <button className={classes.button}>Cart</button>
         </div>        
+    </div>
     </div>
 )
 }
