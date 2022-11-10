@@ -1,6 +1,11 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import classes from './CartList.module.css';
+import CartContext from '../store/CartContext';
 const CartList = props => {
+    const cartCtx = useContext(CartContext);
+    const removeItemHandler = e=>{
+        cartCtx.removeItem(props.element);
+    }
     return (
     <div className={classes.cartList}>
         <div className={classes.item}>
@@ -9,8 +14,8 @@ const CartList = props => {
         </div>
         <span className={classes.price}>{props.element.price}</span>
         <div className={classes.removeAction}>
-        <input value={props.element.quantity} min='1' max='5'></input>
-        <button >REMOVE</button>
+        <input value={props.element.quantity} min='1' max='5' readOnly></input>
+        <button onClick={removeItemHandler} >REMOVE</button>
         </div>
     </div>
     )

@@ -1,32 +1,13 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import classes from './Cart.module.css';
 import CartList from './CartList';
+import CartContext from '../store/CartContext';
 const Cart = (props)=>{
-    const cartElements = [
-        {
-        title: 'Colors',
-        price: 100,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-        quantity: 2,
-        },
-        
-        {
-        title: 'Black and white Colors',
-        price: 50,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-        quantity: 3,
-        },
-        
-        {
-        title: 'Yellow and Black Colors',
-        price: 70,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-        quantity: 1,
-        }
-        ]
+    
+    const cartCtx = useContext(CartContext);
 
-        const cartList = cartElements.map((element)=>{
-            return <CartList element={element}/>
+        const cartList = cartCtx.cartItems.map((element)=>{
+            return <CartList key = {element.id} element={element}/>
         })
         
         
@@ -42,7 +23,7 @@ const Cart = (props)=>{
             <span>Quantity</span>
             </div>
             {cartList}
-            <div className={classes.total}>Total $0</div>
+    <div className={classes.total}>Total ${cartCtx.amount}</div>
             <button className={classes.purchase}>PURCHASE</button>
         </div>
     )
