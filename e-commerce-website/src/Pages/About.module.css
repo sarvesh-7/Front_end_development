@@ -1,0 +1,16 @@
+.About{
+    width:15rem;
+    height: 15rem;
+    float: left;
+    border-radius: 15rem;
+    margin-right: 3rem;
+    margin-bottom: 1rem;
+}
+
+.about_content{
+    margin: 2rem 10rem;
+}
+.about_content p{
+    text-align: left;
+}
+
