@@ -6,6 +6,7 @@ import Products from './Components/Products/Products';
 import ContextProvider from './Components/store/ContextProvider';
 import {Route,Redirect} from 'react-router-dom';
 import About from './Pages/About';
+import Footer from './Components/Layout/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Header/>
       <Products/>
       </Route>
+      <Footer/>
     </div>
     </ContextProvider>
   );
