@@ -23,7 +23,7 @@ const ContextProvider = props=>{
     const addItem = (item)=>{
         for(let i=0;i<items.length; i++){
             if(items[i].title === item.title){
-                items[i].quantity += item.quantity ; 
+                items[i].quantity += 1; 
                 localStorage.setItem('cart-data',JSON.stringify(items));
                 updateItems([...items]);
                 return;

@@ -1,0 +1,22 @@
+.tours{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+    text-align:left;
+    padding : 0.5rem 0 0.5rem;
+    align-items: center;
+}
+
+.tours button{
+    cursor: pointer;
+    background-color:rgb(62, 156, 194);
+    color:White;
+    font-weight: bold;
+    border: none;
+    padding:0.5rem 1.5rem 0.5rem;
+}
+
+.tours span{
+     width:10rem;
+     margin-right: 1rem;
+}

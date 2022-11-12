@@ -7,3 +7,27 @@
 .title{
     font-size: 5rem;
 }
+
+.action{
+    color:rgb(62, 156, 194);
+    background:transparent;
+    cursor:pointer;
+    padding:1rem 2rem 1rem;
+    border:1px solid rgb(62, 156, 194);
+    font-weight: bold;
+    font-size:1rem;
+    margin:1rem;
+}
+
+.header a{
+    color:rgb(62, 156, 194);
+    font-size:4rem;
+    text-decoration:none;
+    display:inline;
+    margin: 1rem;
+    padding: 0;
+}
+
+.header a:hover, button:hover{
+    color:rgb(89, 185, 223);
+}
