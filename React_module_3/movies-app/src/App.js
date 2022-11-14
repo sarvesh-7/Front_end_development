@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
 
 import MoviesList from './components/MoviesList';
+import AddMoviesForm from './components/AddMoviesForm';
 import './App.css';
 
 function App() {
@@ -48,6 +49,9 @@ function App() {
 
     return (
         <React.Fragment>
+            <section>
+                <AddMoviesForm/>
+            </section>
             <section>
                 <button onClick={fetchMoviesHandler}>Fetch Movies</button>
                 <button onClick={stopRetryingHanlder}>Stop Retrying</button>
