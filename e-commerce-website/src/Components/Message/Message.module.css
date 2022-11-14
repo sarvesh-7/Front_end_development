@@ -1,0 +1,10 @@
+.message{
+    background-color: rgb(136, 168, 180);
+    color : black;
+    border-radius: 1rem;
+    position: fixed;
+    z-index:20;
+    bottom:2rem;
+    right:2rem;
+    padding: 1rem 2rem 1rem;
+}

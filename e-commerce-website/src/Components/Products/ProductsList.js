@@ -1,6 +1,7 @@
 import React,{useContext,useState} from 'react';
 import classes from './ProductList.module.css';
 import CartContext from '../store/CartContext';
+import Message from '../Message/Message';
 const ProductsList = props =>{
     const cartCtx = useContext(CartContext);
 
@@ -27,8 +28,8 @@ const ProductsList = props =>{
             <div>
             <span>${props.product.price}</span>
             <button onClick = {addToCartHandler} className={classes.cart_action}>ADD TO CART</button>
-            {isProductAdded && <div className = {classes.message}>
-               Product : <b>{props.product.title}</b> added to the cart </div> }
+            {isProductAdded && <Message>
+               Product : <b>{props.product.title}</b> added to the cart </Message> }
             </div>
         </div>
     )

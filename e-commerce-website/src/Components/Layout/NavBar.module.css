@@ -42,10 +42,14 @@
 }
 
 .active{
-    color:green;
+    color:purple;
 }
 
 .menus span{
     font-weight: bold;
+}
+a{
+    text-decoration: none;
+    color:white;
 }
 

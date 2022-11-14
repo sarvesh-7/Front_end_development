@@ -29,14 +29,17 @@ return(
         <div className={classes.menus}>
             <div>
             <NavLink activeClassName = {classes.active} to='/Home'>
-            <span className={classes.menu_action}>HOME</span>
+                <span className={classes.menu_action}>HOME</span>
             </NavLink>
             <NavLink activeClassName = {classes.active} to='/Store'>
-            <span className={classes.menu_action}>STORE</span>
+                <span className={classes.menu_action}>STORE</span>
             </NavLink>
-            <span className={classes.menu_action}>
-                <NavLink activeClassName = {classes.active} to='/About'>ABOUT</NavLink>
-            </span>
+            <NavLink activeClassName = {classes.active} to='/About' >
+                <span className={classes.menu_action}>ABOUT</span>
+            </NavLink>
+            <NavLink activeClassName = {classes.active} to='/Contact'>
+                <span className={classes.menu_action}>CONTACT US</span>
+            </NavLink>
             </div>
             <div>
             <button onClick = {showCartHandler} className={classes.button}>Cart</button>
