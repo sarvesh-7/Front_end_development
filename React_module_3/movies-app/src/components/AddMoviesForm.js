@@ -1,9 +1,12 @@
 import React,{useRef} from 'react';
 import classes from './AddMoviesForm.module.css';
-const AddMoviesForm = () => {
+import Button from './UI/Button';
+const AddMoviesForm = (props) => {
     const title = useRef();
     const opening_text = useRef();
     const Rel_date = useRef();
+
+    console.log("I am called in AddmoviesForm");
 
     const getMovieDataHandler = (e)=>{
         e.preventDefault();
@@ -12,7 +15,12 @@ const AddMoviesForm = () => {
             openingText : opening_text.current.value,
             releaseDate : Rel_date.current.value
         }
-        console.log(movieObj);
+        props.addMovies(movieObj);
+    }
+
+    const deleteMovieHandler = (e)=>{
+        e.preventDefault();
+        props.deleteMovie(title.current.value);
     }
     return (
         <form>
@@ -22,9 +30,10 @@ const AddMoviesForm = () => {
             <textarea id='opening_text' ref={opening_text}/>
             <label forhtml='Rel_date'>Release Date</label>
             <input type='text' id='Rel_date' ref={Rel_date}/>
-            <button type = 'submit' onClick={getMovieDataHandler}>Add Movie</button>
+            <Button type = 'submit' onClick={getMovieDataHandler}>Add Movie</Button>
+            <Button onClick={deleteMovieHandler}>Delete Movie</Button>
         </form>
     );
 }
 
-export default AddMoviesForm;
+export default React.memo(AddMoviesForm);
