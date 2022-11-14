@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -40,6 +40,11 @@ function App() {
       clearTimeout(id);
       setError(null);
     }
+
+    useEffect(()=>{
+        console.log('API call made in useEffect');
+        fetchMoviesHandler()
+    },[]);
 
     return (
         <React.Fragment>
