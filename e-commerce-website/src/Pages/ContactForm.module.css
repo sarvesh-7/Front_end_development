@@ -18,7 +18,4 @@ label,input{
     background-color: skyblue;
     padding: 0.3rem 1rem 0.3rem;
     border-radius: 0.5rem;
-    cursor: pointer;
-    border: none;
-    font-weight: bold;
 }

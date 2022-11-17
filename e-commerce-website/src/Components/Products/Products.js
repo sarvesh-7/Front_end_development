@@ -1,37 +1,39 @@
 import React from 'react';
 import ProductsList from './ProductsList';
 import classes from './Products.module.css';
+import Button from '../UI/Button';
+
 const Products = props=>{
      const productsArr = [
         {
         id: 'P1',
-        title: 'Colors',
+        title: 'Shoes',
         price: 100,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
+        imageUrl: '\\Assets\\Shoes\\shoes-main.webp',
         quantity:1
         },
         
         {
-        title: 'Black and white Colors',
         id: 'P2',
+        title: 'Smartwatch',
         price: 50,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
+        imageUrl: '\\Assets\\Watch\\watch-main.webp',
         quantity:1
         },
         
         {
         id: 'P3',
-        title: 'Yellow and Black Colors',
+        title: 'Airpods',
         price: 70,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
+        imageUrl: '\\Assets\\Airpods\\Airpods-main.webp',
         quantity:1
         },
         
         {
         id: 'P4',
-        title: 'Blue Color',
-        price: 100,
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
+        title: 'Wallet',
+        price: 20,
+        imageUrl: '\\Assets\\Wallet\\wallet-main.webp',
         quantity:1
         }
         ];
@@ -45,7 +47,7 @@ const Products = props=>{
             <div className={classes.products}>    
                 {ProductsComp}  
             </div>
-            <button className={classes.showcart}>See the cart</button>
+            <Button className={classes.showcart}>See the cart</Button>
             </React.Fragment>
         )
         

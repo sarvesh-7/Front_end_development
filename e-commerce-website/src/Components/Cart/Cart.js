@@ -2,6 +2,7 @@ import React,{useContext} from 'react';
 import classes from './Cart.module.css';
 import CartList from './CartList';
 import CartContext from '../store/CartContext';
+import Button from '../UI/Button';
 const Cart = (props)=>{
     
     const cartCtx = useContext(CartContext);
@@ -13,9 +14,9 @@ const Cart = (props)=>{
         
     return (
         <div className={classes.cart}>
-            <button onClick = {props.onHideCart} className={classes.close}>
+            <Button onClick = {props.onHideCart} className={classes.close}>
                X
-            </button>
+            </Button>
             <h2>Cart</h2>
             <div className={classes.heading}>
             <span>Item</span>
@@ -24,7 +25,7 @@ const Cart = (props)=>{
             </div>
             {cartList}
     <div className={classes.total}>Total ${cartCtx.amount}</div>
-            <button className={classes.purchase}>PURCHASE</button>
+            <Button className={classes.purchase}>PURCHASE</Button>
         </div>
     )
 };

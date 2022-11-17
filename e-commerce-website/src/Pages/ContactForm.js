@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import classes from './ContactForm.module.css';
+import Button from '../Components/UI/Button';
 
 const Contact = props => {
 
@@ -15,7 +16,6 @@ const Contact = props => {
             alert('please enter valid email address');
             return false;
         }
-        return;
     }
 
     function ValidatePhone(phone) {
@@ -71,11 +71,11 @@ const Contact = props => {
             <input type='tel' pattern='[0-9] {3}-[0-9] {2}-[0-9] {3}' id='phone'
                 ref={usrPhone}
                 required/>
-            <button className={
+            <Button className={
                     classes.submit
                 }
                 type='submit'
-                onClick={submitDetails}>Submit</button>
+                onClick={submitDetails}>Submit</Button>
         </form>
     )
 };

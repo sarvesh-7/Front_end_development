@@ -1,0 +1,40 @@
+.reviews{
+    display: flex;
+    flex-direction: column;
+}
+
+.comments{
+    display:flex;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+    padding-bottom: 0.3rem;
+    text-align: left;
+}
+
+.rating{
+    background-color: green;
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.2rem 1rem 0.2rem;
+}
+
+.rating span{
+    margin:0.1rem;
+}
+
+.rating{
+    margin-right:0.5rem;
+    font-weight: normal;
+}
+
+.comments span{
+    margin-bottom: 0.3rem;
+    margin-top:1rem;
+}
+.reviews h2{
+    border-bottom: 1px solid grey;
+}
+.user{
+    font-weight: normal;
+    font-size: 0.8rem;
+}

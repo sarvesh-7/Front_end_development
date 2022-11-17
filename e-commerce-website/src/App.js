@@ -4,11 +4,12 @@ import NavBar from './Components/Layout/NavBar';
 import Header from './Components/Layout/Header';
 import Products from './Components/Products/Products';
 import ContextProvider from './Components/store/ContextProvider';
-import {Route,Redirect} from 'react-router-dom';
+import {Route,Redirect,Switch} from 'react-router-dom';
 import About from './Pages/About';
 import Footer from './Components/Layout/Footer';
 import Home from './Pages/Home';
 import ContactPage from './Pages/ContactPage';
+import ProductDetails from './Pages/ProductDetails';
 
 let home = '/Home';
 let store = '/Store';
@@ -29,10 +30,15 @@ function App() {
       <Header urlPath={store}/>
       <Home/>
       </Route>
-      <Route path={store}>
+      <Switch>
+      <Route path={store} exact>
       <Header/>
-      <Products/>
+      <Products />
       </Route>
+      <Route path={`${store}/:product`} >
+      <ProductDetails/>
+      </Route>
+      </Switch>
       <Route path={contact}>
         <ContactPage/>
       </Route>

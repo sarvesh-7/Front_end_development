@@ -15,11 +15,16 @@
 
 .items img:hover{
     transform: scale(1.5);
-    filter: brightness(130%);
+    /* filter: brightness(130%); */
     transition: 1s;
 }
 
 .imgWrapper{
     display: inline-block;
     overflow: hidden;
+}
+
+.imgWrapper img{
+    height : 15rem;
+    width: 15rem;
 }
