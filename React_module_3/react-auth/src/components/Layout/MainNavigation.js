@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom';
-
+import UserContext from '../Store/UserContext';
+import {useContext} from 'react';
 import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {
+  const userCtx = useContext(UserContext);
+  const onLogoutHandler = ()=>{
+    userCtx.updateToken('');
+  }
   return (
     <header className={classes.header}>
       <Link to='/'>
@@ -10,15 +15,25 @@ const MainNavigation = () => {
       </Link>
       <nav>
         <ul>
-          <li>
+          {
+            !userCtx.token && 
+            <li>
             <Link to='/auth'>Login</Link>
           </li>
-          <li>
+          }
+          {
+            userCtx.token && 
+            <li>
             <Link to='/profile'>Profile</Link>
-          </li>
-          <li>
-            <button>Logout</button>
-          </li>
+            </li>
+          }
+          {
+            userCtx.token && 
+            <li>
+            <button onClick={onLogoutHandler}>Logout</button>
+            </li>
+          }
+          
         </ul>
       </nav>
     </header>
