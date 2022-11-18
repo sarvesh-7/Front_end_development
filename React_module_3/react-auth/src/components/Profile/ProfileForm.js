@@ -1,8 +1,10 @@
 import classes from './ProfileForm.module.css';
 import {useRef,useContext,useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import userContext from '../Store/UserContext';
 
 const ProfileForm = () => {
+  const history = useHistory();
   const passwordRef = useRef();
   const userCtx = useContext(userContext);
   //state to show sending request loader
@@ -30,11 +32,13 @@ const ProfileForm = () => {
       });
       if(res.ok){
         alert('password changed successfully');
+        history.replace('/');
       }
       else{
         const data = await res.json();
         alert(data.error.message);
         setIsSendingReq(false);
+        
       }
     }
     catch(error){

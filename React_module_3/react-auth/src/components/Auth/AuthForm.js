@@ -1,9 +1,10 @@
 import { useState,useRef,useContext } from 'react';
 import UserContext from '../Store/UserContext';
-
+import {useHistory} from 'react-router-dom';
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
+  const history = useHistory();
   //state to display login/sign up page
   const [isLogin, setIsLogin] = useState(true);
   //state to show sending request loader
@@ -45,6 +46,7 @@ const AuthForm = () => {
           const data = await res.json();
           console.log('auth token: ',data.idToken);
           userCtx.updateToken(data.idToken);
+          history.replace('/');
         }
         else{
           //if credentials are wrong
