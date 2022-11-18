@@ -16,7 +16,39 @@ const AuthForm = () => {
     event.preventDefault();
     setIsSendingReq(true);
     if(isLogin){
-
+      try{
+          const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC7lmr4RcmF7Vj9__TB7b_Gr0VUHH5SoYI',
+        {
+          method:'POST',
+          body: JSON.stringify({
+            email:emailRef.current.value,
+            password:passwordRef.current.value,
+            returnSecureToken:true
+          }),
+          header:{
+            'Content-Type':'application/json'
+          }
+        });
+        if(res.ok){
+          //do something
+          setIsSendingReq(false);
+          alert('User authenticated successfully');
+          const data = await res.json();
+          console.log('auth token: ',data.idToken);
+        }
+        else{
+          const data = await res.json();
+          console.log(data.error.message);
+          // alert('Weak password : password should be at least 6 characters');
+          alert(data.error.message);
+          setIsSendingReq(false);
+      }
+    }
+      catch(error){
+        //do something
+        console.log(error.message);
+        setIsSendingReq(false);
+      }
     }
     else{
       try{
@@ -35,6 +67,7 @@ const AuthForm = () => {
       if(res.ok){
         //do something
         setIsSendingReq(false);
+        alert('User created successfully');
       }
       else{
         const data = await res.json();
