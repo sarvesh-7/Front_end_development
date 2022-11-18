@@ -4,19 +4,26 @@ import UserContext from '../Store/UserContext';
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
+  //state to display login/sign up page
   const [isLogin, setIsLogin] = useState(true);
+  //state to show sending request loader
   const[isSendingReq, setIsSendingReq] = useState(false);
+
+  //refs to get email and password entered while login/signup
   const emailRef = useRef();
   const passwordRef = useRef();
   const userCtx = useContext(UserContext);
 
+  //switch between login/signeup
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
 
+
   const onSubmitHandler = async(event)=>{
     event.preventDefault();
     setIsSendingReq(true);
+    //sending authentication request after login
     if(isLogin){
       try{
           const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC7lmr4RcmF7Vj9__TB7b_Gr0VUHH5SoYI',
@@ -32,7 +39,7 @@ const AuthForm = () => {
           }
         });
         if(res.ok){
-          //do something
+          //if credential matches
           setIsSendingReq(false);
           alert('User authenticated successfully');
           const data = await res.json();
@@ -40,6 +47,7 @@ const AuthForm = () => {
           userCtx.updateToken(data.idToken);
         }
         else{
+          //if credentials are wrong
           const data = await res.json();
           console.log(data.error.message);
           // alert('Weak password : password should be at least 6 characters');
@@ -54,6 +62,7 @@ const AuthForm = () => {
       }
     }
     else{
+      //send new user ac creation request to firebase
       try{
         const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC7lmr4RcmF7Vj9__TB7b_Gr0VUHH5SoYI',
       {
@@ -68,11 +77,12 @@ const AuthForm = () => {
         }
       });
       if(res.ok){
-        //do something
+        //when succesfully created account
         setIsSendingReq(false);
         alert('User created successfully');
       }
       else{
+        //when account creation failed due to same email or weak password etc
         const data = await res.json();
         console.log(data.error.message);
         // alert('Weak password : password should be at least 6 characters');
