@@ -4,6 +4,8 @@ import {useState,useEffect} from 'react';
 const ContextProvider = props=>{
 
     const [items,updateItems] = useState([]); //state to update cart items
+    const authToken = localStorage.getItem('AUTH_TOKEN');
+    const [token,setToken] = useState(authToken);
     let totalAmount = 0; //total cart amount
 
     useEffect(()=>{
@@ -47,12 +49,22 @@ const ContextProvider = props=>{
         
     };
 
+    //update user token after login and logout
+    const updateToken = (token)=>{
+        localStorage.setItem('AUTH_TOKEN', token);
+        setToken(token);
+    }
+
+
+
     //context object which contains all cart items and functions to add/remove cart items
     const CartCtx = {
         cartItems : items,
         amount : totalAmount,
         addItem : addItem,
         removeItem : removeItem,
+        token : token,
+        updateToken : updateToken
     }
     return (<CartContext.Provider value={CartCtx}>
         {props.children}

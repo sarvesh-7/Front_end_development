@@ -1,0 +1,15 @@
+label,input{
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin-bottom:0.5rem;
+}
+
+form{
+    width: 40%;
+    margin: auto;
+    margin-top:1rem;
+    border:3px solid skyblue;
+    padding: 1rem;
+    /* align-items: center; */
+}

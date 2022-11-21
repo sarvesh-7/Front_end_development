@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import classes from './ContactForm.module.css';
 import Button from '../Components/UI/Button';
+import Form from '../Components/UI/Form';
 
 const Contact = props => {
 
@@ -58,9 +59,7 @@ const Contact = props => {
     }
 
     return (
-        <form className={
-            classes.contactForm
-        }>
+        <Form>
             <label forhtml='name'>Name</label>
             <input type='text' id='name'
                 ref={usrName}/>
@@ -76,7 +75,7 @@ const Contact = props => {
                 }
                 type='submit'
                 onClick={submitDetails}>Submit</Button>
-        </form>
+        </Form>
     )
 };
 export default React.memo(Contact);

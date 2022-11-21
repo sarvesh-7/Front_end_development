@@ -10,6 +10,7 @@ import Footer from './Components/Layout/Footer';
 import Home from './Pages/Home';
 import ContactPage from './Pages/ContactPage';
 import ProductDetails from './Pages/ProductDetails';
+import Login from './Pages/Auth/Login';
 
 let home = '/Home';
 let store = '/Store';
@@ -41,6 +42,9 @@ function App() {
       </Switch>
       <Route path={contact}>
         <ContactPage/>
+      </Route>
+      <Route path='/Login'>
+        <Login/>
       </Route>
       <Footer/>
       </div>

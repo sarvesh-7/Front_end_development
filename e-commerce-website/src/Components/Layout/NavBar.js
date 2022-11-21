@@ -40,6 +40,9 @@ return(
             <NavLink activeClassName = {classes.active} to='/Contact'>
                 <span className={classes.menu_action}>CONTACT US</span>
             </NavLink>
+            <NavLink activeClassName = {classes.active} to='/Login'>
+                <span className={classes.menu_action}>LOGIN</span>
+            </NavLink>
             </div>
             <div>
             <button onClick = {showCartHandler} className={classes.button}>Cart</button>
