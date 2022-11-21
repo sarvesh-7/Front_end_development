@@ -1,7 +1,7 @@
 import React,{useState,useContext} from 'react';
 import classes from './NavBar.module.css';
 import Cart from '../Cart/Cart';
-import {NavLink} from 'react-router-dom';
+import {NavLink,useHistory} from 'react-router-dom';
 import CartContext from '../store/CartContext';
 const NavBar = props=>{
 const [isCartOpen,setIsCartOpen] = useState(false);
@@ -10,6 +10,7 @@ let cartItemsCount = 0;
 
 //update total cart elements count
 const cartCtx = useContext(CartContext);
+const history = useHistory();
 
 cartCtx.cartItems.forEach(item => {
     cartItemsCount += item.quantity;
@@ -21,6 +22,12 @@ const showCartHandler = (e) =>{
 
 const hideCartHandler = (e) =>{
     setIsCartOpen(false);
+}
+
+const onLogoutHandler = (e)=>{
+    cartCtx.updateToken('');
+    history.replace('/Login');
+    alert('You have logged out successfully');
 }
 
 return(
@@ -40,9 +47,17 @@ return(
             <NavLink activeClassName = {classes.active} to='/Contact'>
                 <span className={classes.menu_action}>CONTACT US</span>
             </NavLink>
-            <NavLink activeClassName = {classes.active} to='/Login'>
+            {
+                !cartCtx.token && 
+                <NavLink activeClassName = {classes.active} to='/Login'>
                 <span className={classes.menu_action}>LOGIN</span>
-            </NavLink>
+                </NavLink>
+            }
+            {
+                cartCtx.token &&
+                <span className={classes.menu_action} onClick={onLogoutHandler}>LOGOUT</span>
+            }
+            
             </div>
             <div>
             <button onClick = {showCartHandler} className={classes.button}>Cart</button>

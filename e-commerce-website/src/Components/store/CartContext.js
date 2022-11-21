@@ -4,7 +4,7 @@ const CartContext = createContext({
     amount : 0,
     addItem : item=>{},
     removeItem : id=>{},
-    isLoggedIn : false,
+    token : '',
     updateToken : (token)=>{}
 });
 
