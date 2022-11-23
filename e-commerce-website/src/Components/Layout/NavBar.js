@@ -26,8 +26,11 @@ const hideCartHandler = (e) =>{
 
 const onLogoutHandler = (e)=>{
     cartCtx.updateToken('');
+    cartCtx.updateEmail('');
     history.replace('/Login');
+    setIsCartOpen(false);
     alert('You have logged out successfully');
+
 }
 
 return(
@@ -57,12 +60,15 @@ return(
                 cartCtx.token &&
                 <span className={classes.menu_action} onClick={onLogoutHandler}>LOGOUT</span>
             }
+            </div>
+            {
+                cartCtx.token &&
+                <div>
+                <button onClick = {showCartHandler} className={classes.button}>Cart</button>
+                <span>{cartItemsCount}</span>
+                </div>
+            }
             
-            </div>
-            <div>
-            <button onClick = {showCartHandler} className={classes.button}>Cart</button>
-            <span>{cartItemsCount}</span>
-            </div>
             {isCartOpen && <Cart onHideCart = {hideCartHandler} />}
         </div>        
     </div>

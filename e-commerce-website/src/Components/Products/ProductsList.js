@@ -17,16 +17,18 @@ const ProductsList = props =>{
     } 
 
     const addToCartHandler = e=>{
-        setIsProductAdded(true);
-        removeMessage();
-        cartCtx.addItem(props.product);
+        //add same products upto 5 quantities
+        if (cartCtx.addItem(props.product, cartCtx.email))
+        {
+            setIsProductAdded(true);
+            removeMessage();
+        }  
     }
     return(
         <div className={classes.items}>
             <h3>{props.product.title}</h3>
             <div className={classes.imgWrapper}>
             <Link to={{ pathname : `store/${props.product.title}`, state:{item : props.product}}} >
-            {console.log(props.product)}
             <img src={props.product.imageUrl} type='image/webp'/>
             </Link>
             </div>

@@ -5,6 +5,7 @@ const CartContext = createContext({
     addItem : item=>{},
     removeItem : id=>{},
     token : '',
+    email : '',
     updateToken : (token)=>{}
 });
 

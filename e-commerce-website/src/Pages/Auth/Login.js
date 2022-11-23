@@ -30,6 +30,8 @@ const Login = (props)=>{
                 const data = await res.json();
                 alert('User authenticated successfully');
                 cartCtx.updateToken(data.idToken);
+                cartCtx.updateEmail(emailRef.current.value);
+                console.log('email', emailRef.current.value);
                 history.replace('/');
             }
             else{
@@ -44,9 +46,9 @@ const Login = (props)=>{
     }
    return (
     <Form>
-        <label htmlfor='email'>Email</label>
+        <label htmlFor='email'>Email</label>
         <input type='email' id='email' ref={emailRef}/>
-        <label htmlfor='password'>Password</label>
+        <label htmlFor='password'>Password</label>
         <input type='password' id='password' ref={passwordRef}/>
         <Button className={classes.submit} onClick={onLoginHnalder}>Login</Button>
     </Form>);

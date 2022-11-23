@@ -3,9 +3,12 @@ import classes from './CartList.module.css';
 import CartContext from '../store/CartContext';
 const CartList = props => {
     const cartCtx = useContext(CartContext);
+
+    //remove items from the cart
     const removeItemHandler = e=>{
         cartCtx.removeItem(props.element);
     }
+    
     return (
     <div className={classes.cartList}>
         <div className={classes.item}>

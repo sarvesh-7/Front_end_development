@@ -7,6 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 import ContextProvider from './Components/store/ContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// const cors = require("cors");
+// App.use(cors());
 root.render(
   <React.StrictMode>
     <ContextProvider>

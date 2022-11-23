@@ -14,11 +14,6 @@ import Login from './Pages/Auth/Login';
 import CartContext from './Components/store/CartContext';
 import Cart from './Components/Cart/Cart';
 
-let home = '/Home';
-let store = '/Store';
-let about = '/about';
-let contact = '/Contact';
-
 
 function App() {
   const cartCtx = useContext(CartContext);
@@ -26,16 +21,16 @@ function App() {
     <div className="App">
       <NavBar/>
       <div className='container'>
-      <Route path={about}><About/></Route>
+      <Route path='/about'><About/></Route>
       <Route exact path='/'>
-        <Redirect to={home}/>
+        <Redirect to='/Home'/>
         </Route>
-      <Route path={home}>
-      <Header urlPath={store}/>
+      <Route path='/Home'>
+      <Header urlPath='/Store'/>
       <Home/>
       </Route>
       <Switch>
-          <Route path={store} exact>
+          <Route path='/Store' exact>
             {
               cartCtx.token && <React.Fragment>
                 <Header/>
@@ -47,7 +42,7 @@ function App() {
             }
           </Route>
 
-          <Route path={`${store}/:product`} >
+          <Route path={`/Store/:product`} >
             {
               cartCtx.token && <React.Fragment>
                 <ProductDetails/>
@@ -58,7 +53,7 @@ function App() {
             }
           </Route>
       </Switch>
-      <Route path={contact}>
+      <Route path='/Contact'>
         <ContactPage/>
       </Route>
       <Route path='/Login'>

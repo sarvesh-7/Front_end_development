@@ -1,12 +1,25 @@
-import React from 'react';
+import React,{useState} from 'react';
 import ProductsList from './ProductsList';
 import classes from './Products.module.css';
 import Button from '../UI/Button';
+import Cart from '../Cart/Cart';
+
 
 const Products = props=>{
+
+    const [isCartOpen,setIsCartOpen] = useState(false);
+
+    const showCartHandler = (e) =>{
+        setIsCartOpen(true);
+    }
+    
+    const hideCartHandler = (e) =>{
+        setIsCartOpen(false);
+    }
+
      const productsArr = [
         {
-        id: 'P1',
+        key: 'P1',
         title: 'Shoes',
         price: 100,
         imageUrl: '\\Assets\\Shoes\\shoes-main.webp',
@@ -14,7 +27,7 @@ const Products = props=>{
         },
         
         {
-        id: 'P2',
+        key: 'P2',
         title: 'Smartwatch',
         price: 50,
         imageUrl: '\\Assets\\Watch\\watch-main.webp',
@@ -22,7 +35,7 @@ const Products = props=>{
         },
         
         {
-        id: 'P3',
+        key: 'P3',
         title: 'Airpods',
         price: 70,
         imageUrl: '\\Assets\\Airpods\\Airpods-main.webp',
@@ -30,7 +43,7 @@ const Products = props=>{
         },
         
         {
-        id: 'P4',
+        key: 'P4',
         title: 'Wallet',
         price: 20,
         imageUrl: '\\Assets\\Wallet\\wallet-main.webp',
@@ -39,7 +52,7 @@ const Products = props=>{
         ];
 
         const ProductsComp = productsArr.map((product)=>{
-            return <ProductsList key={product.id} product={product}/>
+            return <ProductsList key={product.key} product={product}/>
         })
 
         return(
@@ -47,7 +60,8 @@ const Products = props=>{
             <div className={classes.products}>    
                 {ProductsComp}  
             </div>
-            <Button className={classes.showcart}>See the cart</Button>
+            <Button className={classes.showcart} onClick={showCartHandler}>See the cart</Button>
+            {isCartOpen && <Cart onHideCart = {hideCartHandler} />}
             </React.Fragment>
         )
         
