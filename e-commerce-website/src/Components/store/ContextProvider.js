@@ -18,12 +18,15 @@ const ContextProvider = props=>{
     useEffect(()=>{
         async function getItems(){
             try{
-                const res = await axios.get(baseURL);
-                console.log(res.data);
-                if(res.data){
-                    // console.log(cartData);
-                    updateItems([...res.data]);
-                }
+                if(email !=='' && email !== undefined)
+                {
+                    const res = await axios.get(baseURL);
+                    console.log(res.data);
+                    if(res.data){
+                        // console.log(cartData);
+                        updateItems([...res.data]);
+                    }
+                }   
             }
             catch(error){
                 console.log(error);

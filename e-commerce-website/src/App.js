@@ -2,28 +2,30 @@ import logo from './logo.svg';
 import './App.css';
 import NavBar from './Components/Layout/NavBar';
 import Header from './Components/Layout/Header';
-import Products from './Components/Products/Products';
 import {Route,Redirect,Switch} from 'react-router-dom';
-import React,{useContext} from 'react';
-import About from './Pages/About';
+import React,{useContext,Suspense} from 'react';
 import Footer from './Components/Layout/Footer';
-import Home from './Pages/Home';
-import ContactPage from './Pages/ContactPage';
-import ProductDetails from './Pages/ProductDetails';
 import Login from './Pages/Auth/Login';
 import CartContext from './Components/store/CartContext';
-import Cart from './Components/Cart/Cart';
 
+//lazy loading for all components except Home,NavBar component
+const About = React.lazy(()=>import('./Pages/About'));
+const ContactPage = React.lazy(()=>import('./Pages/ContactPage'));
+const Products = React.lazy(()=>import('./Components/Products/Products'));
+const ProductDetails = React.lazy(()=>import('./Pages/ProductDetails'));
+const Home = React.lazy(()=>import('./Pages/Home'));
 
 function App() {
   const cartCtx = useContext(CartContext);
   return (
+
     <div className="App">
       <NavBar/>
+      <Suspense fallback={<p>Loading..</p>}>
       <div className='container'>
       <Route path='/about'><About/></Route>
       <Route exact path='/'>
-        <Redirect to='/Home'/>
+        <Redirect to='/Login'/>
         </Route>
       <Route path='/Home'>
       <Header urlPath='/Store'/>
@@ -61,6 +63,7 @@ function App() {
       </Route>
       <Footer/>
       </div>
+      </Suspense>
     </div>
   );
 }
