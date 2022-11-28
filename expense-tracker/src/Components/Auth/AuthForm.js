@@ -1,10 +1,13 @@
 import React,{useState,useRef,useContext} from 'react';
 import Button from '../UI/Button';
 // import UserContext from '../Store/UserContext';
-// import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import classes from './AuthForm.module.css';
+
 const AuthForm = (props) => {
 
+  const navigate = useNavigate();
     //state to toggle between login/signup function
     const [isLogin,setIsLogin] = useState(false);
 
@@ -16,42 +19,6 @@ const AuthForm = (props) => {
     const passwordRef = useRef();
     const confPasswordRef = useRef();
 
-    //check password validity
-    // const checkPasswordFormat = (password)=>{
-
-    //     //password must be 7-14 char long and must have only numbers, letters and underscore
-    //     let format =  /^[A-Za-z]\w{7,14}$/;
-
-    //     //check if password matches above format
-    //     if(password.value.match(format)) 
-    //     { 
-    //         return true;
-    //     }
-    //     else
-    //     { 
-    //         if(password[0]==='_' || !isNaN(password[0]))
-    //         alert('first character must be a letter');
-    //         else
-    //         alert('Passowrd must only contain alphanumeric characters and should be 7-14 characters long');
-    //         return false;
-    //     }
-    // }
-
-    //check email validity
-    // const checkEmailFormat = (email)=>{
-    //     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    //     if (mail.match(emailFormat)) 
-    //     {
-    //         return true;
-    //     } 
-    //     else 
-    //     {
-    //         alert('please enter valid email address');
-    //         return false;
-    //     }
-    // }
-
-    //toggle between signup/login functionality
     //switch between login/signeup
         const switchAuthModeHandler = () => {
             setIsLogin((prevState) => !prevState);
@@ -139,8 +106,12 @@ const AuthForm = (props) => {
                 //if credential matches
                 setIsSendingReq(false);
                 alert('User authenticated successfully');
-                // const data = await res.json();
-                // console.log('auth token: ',data.idToken);
+                navigate('/welcome',{replace:true});
+            
+
+                const data = await res.json();
+                console.log('auth token: ',data.idToken);
+                localStorage.setItem('expense_token', data.idToken);
                 // userCtx.updateToken(data.idToken);
                 // history.replace('/');
               }
@@ -161,18 +132,16 @@ const AuthForm = (props) => {
         }
     }
     return (
+      <React.Fragment>
         <div className={classes.authForm}>
         <h1>{isLogin ? 'Login' : 'SignUp' }</h1>
         <form onSubmit={onSubmitHandler}>
-            <label forhtml='email'>Email</label>
-            <input type='email' id='email' ref={emailRef}/>
-            <label forhtml='password'>Password</label>
-            <input type='password' id='password' ref={passwordRef}/>
+            <input type='email' id='email' ref={emailRef} placeholder='Email'/>
+            <input type='password' id='password' ref={passwordRef} placeholder='Password'/>
             {
               !isLogin && 
               <React.Fragment> 
-              <label forhtml='conf_password'>Confirm Password</label>
-              <input type='password' id='conf_password' ref={confPasswordRef}/>
+              <input type='password' id='conf_password' ref={confPasswordRef} placeholder='Confirm Password'/>
               </React.Fragment>
             }
             {
@@ -181,10 +150,17 @@ const AuthForm = (props) => {
             {
                 isSendingReq && <p>Sending Request</p>
             }
-            
         </form>
-        <Button onClick={switchAuthModeHandler} className={classes.switchAuth}>{isLogin ? 'Create new account' : 'Have an account?Login' }</Button>
+        {
+              isLogin &&
+              <Link to='..'>Forgot password</Link>
+        }
         </div>
+        <div className={classes.switch}>
+          <button onClick={switchAuthModeHandler} className={classes.switchAuth}>
+          {isLogin ? "Don't have an account?Sign Up" : 'Have an account?Login' }</button>
+        </div>
+        </React.Fragment>
     )
 }
 export default AuthForm;
