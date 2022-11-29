@@ -1,0 +1,12 @@
+.welcome{
+    display: flex;
+    justify-content: space-between;
+    margin:0.5rem;
+    align-items: center;
+}
+.profile{
+    background-color: rgb(190, 153, 153);
+    border-radius: 0.5rem;
+    padding:0.5rem 1rem 0.5rem;
+    margin: 0;
+}

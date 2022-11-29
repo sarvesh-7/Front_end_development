@@ -1,6 +1,6 @@
 import React,{useState,useRef,useContext} from 'react';
 import Button from '../UI/Button';
-// import UserContext from '../Store/UserContext';
+import AuthContext from '../Store/AuthContext';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import classes from './AuthForm.module.css';
@@ -18,6 +18,8 @@ const AuthForm = (props) => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const confPasswordRef = useRef();
+
+    const authCtx = useContext(AuthContext);
 
     //switch between login/signeup
         const switchAuthModeHandler = () => {
@@ -106,12 +108,12 @@ const AuthForm = (props) => {
                 //if credential matches
                 setIsSendingReq(false);
                 alert('User authenticated successfully');
-                navigate('/welcome',{replace:true});
+                // navigate('/welcome',{replace:true});
             
 
                 const data = await res.json();
                 console.log('auth token: ',data.idToken);
-                localStorage.setItem('expense_token', data.idToken);
+                authCtx.updateToken(data.idToken);
                 // userCtx.updateToken(data.idToken);
                 // history.replace('/');
               }
