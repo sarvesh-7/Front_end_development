@@ -14,7 +14,6 @@ code {
 
 *{
   box-sizing: border-box;
-  font-weight: bold;
 }
 
 input,label{
@@ -38,4 +37,8 @@ button:hover{
 a{
   color: blue;
   text-decoration: none;
+}
+
+.font-bold{
+  font-weight:bold;
 }

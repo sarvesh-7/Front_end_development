@@ -5,6 +5,7 @@ import Welcome from './Pages/Welcome';
 import Profile from './Pages/Profile';
 import AuthContext from './Components/Store/AuthContext';
 import {useContext,Fragment} from 'react';
+import ForgotPassword from './Components/Auth/ForgotPassword';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -26,6 +27,9 @@ function App() {
       {
         !authCtx.isLoggedin && <Route path='*' element={<Navigate to = '/' replace={true}/>}/>
       }
+      {
+        !authCtx.isLoggedin && <Route path='/ForgotPassword' element={<ForgotPassword/>}/>
+      }  
       {
         authCtx.isLoggedin && <Route path='*' element={<p>404 not found</p>}/>
       } 

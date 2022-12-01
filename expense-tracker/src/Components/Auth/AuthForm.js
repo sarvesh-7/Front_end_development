@@ -1,8 +1,9 @@
-import React,{useState,useRef,useContext} from 'react';
+import React,{useState,useRef,useContext, Fragment} from 'react';
 import Button from '../UI/Button';
 import AuthContext from '../Store/AuthContext';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
+import ForgotPassword from './ForgotPassword';
 import classes from './AuthForm.module.css';
 
 const AuthForm = (props) => {
@@ -135,7 +136,7 @@ const AuthForm = (props) => {
     }
     return (
       <React.Fragment>
-        <div className={classes.authForm}>
+        <div className={`${classes.authForm} `}>
         <h1>{isLogin ? 'Login' : 'SignUp' }</h1>
         <form onSubmit={onSubmitHandler}>
             <input type='email' id='email' ref={emailRef} placeholder='Email'/>
@@ -155,7 +156,9 @@ const AuthForm = (props) => {
         </form>
         {
               isLogin &&
-              <Link to='..'>Forgot password</Link>
+              <Fragment>
+              <Link to='/ForgotPassword'>Forgot password</Link>
+              </Fragment>
         }
         </div>
         <div className={classes.switch}>
