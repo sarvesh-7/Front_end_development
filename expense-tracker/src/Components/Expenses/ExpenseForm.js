@@ -1,27 +1,27 @@
 import classes from './ExpenseForm.module.css';
-import {useRef, Fragment,useState} from 'react';
+import {useRef, Fragment, useContext} from 'react';
 import Button from '../UI/Button';
 import ExpenseList from './ExpenseList';
+import ExpContext from '../Store/ExpContext';
+import axios from 'axios';
 
 const ExpenseForm = ()=>{
-
-    const[expList, setExpList] = useState([]);
 
     //get expense details entered by user
     const amountRef = useRef();
     const descRef = useRef();
     const categoryRef = useRef();
 
+    const expCtx = useContext(ExpContext);
 
-    const submitExpenseHandler=(e)=>{
+    const submitExpenseHandler=async(e)=>{
         e.preventDefault();
         const expObj = {
-            id : Math.random(),
             amount : amountRef.current.value,
             description : descRef.current.value,
             category : categoryRef.current.value
-        }
-        setExpList((expList)=>[...expList,  expObj]);
+        };
+        expCtx.addExpense(expObj);
     }
 
     return(
@@ -43,7 +43,7 @@ const ExpenseForm = ()=>{
             Add Expense
             </Button>
         </form>
-        <ExpenseList expenses = {expList}/>
+        <ExpenseList expenses = {expCtx.expenseList}/>
         </Fragment>
     )
 };
