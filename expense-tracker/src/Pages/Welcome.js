@@ -4,6 +4,7 @@ import React,{Fragment,useContext} from 'react';
 import AuthContext from '../Components/Store/AuthContext';
 import Button from '../Components/UI/Button';
 import Logout from './Logout';
+import ExpenseForm from '../Components/Expenses/ExpenseForm';
 import axios from 'axios';
 
 const Welcome = (props) => {
@@ -57,9 +58,8 @@ const Welcome = (props) => {
         <Logout/>
         </div>
         <hr/>
+        <ExpenseForm/>
         </Fragment>
-
-
     )
 }
 export default Welcome;
