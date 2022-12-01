@@ -21,9 +21,14 @@ function App() {
         </Fragment>
       }
       {
-        !authCtx.isLoggedin && <Route path='/' element={<AuthForm/>}/>
+        !authCtx.isLoggedin && <Route path = '/' element={<AuthForm/>}/>
       }
-      <Route path='*' element={<p>404 not found</p>}/>
+      {
+        !authCtx.isLoggedin && <Route path='*' element={<Navigate to = '/' replace={true}/>}/>
+      }
+      {
+        authCtx.isLoggedin && <Route path='*' element={<p>404 not found</p>}/>
+      } 
       </Routes>
     </div>
   );

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import React,{Fragment,useContext} from 'react';
 import AuthContext from '../Components/Store/AuthContext';
 import Button from '../Components/UI/Button';
-import Axios from 'axios';
+import Logout from './Logout';
 import axios from 'axios';
 
 const Welcome = (props) => {
@@ -54,6 +54,7 @@ const Welcome = (props) => {
                 <Link to={`/profile`}>Edit profile</Link> 
             </p>
         }
+        <Logout/>
         </div>
         <hr/>
         </Fragment>
