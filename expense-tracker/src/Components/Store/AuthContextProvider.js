@@ -12,6 +12,7 @@ const AuthContextProvider = (props)=>{
     const[profilePhoto,setProfilePhoto] = useState('');
 
     const token = localStorage.getItem('expense_token');
+    const email = localStorage.getItem('expense_email');
 
     //check if user has loggedin or not i.e to make login persistant after refresh
     useEffect(()=>{
@@ -45,10 +46,11 @@ const AuthContextProvider = (props)=>{
     },[token]);
 
     //update user token
-    const updateToken = (token)=>{
+    const updateAuthInfo = (token,email)=>{
 
         //update token in local storage and update state
         localStorage.setItem('expense_token', token);
+        localStorage.setItem('expense_email', email);
         setIsLoggedIn(true);
     }
 
@@ -57,10 +59,12 @@ const AuthContextProvider = (props)=>{
         setFullName(name);
         setProfilePhoto(profileUrl);
     }
+
     const authCtx = {
         token:token,
+        email:email,
         isLoggedin : isLoggedin,
-        updateToken:updateToken,
+        updateAuthInfo:updateAuthInfo,
         fullName : fullName,
         profilePhoto : profilePhoto,
         updateProfile : updateProfile

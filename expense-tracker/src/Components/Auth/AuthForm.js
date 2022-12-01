@@ -113,7 +113,7 @@ const AuthForm = (props) => {
 
                 const data = await res.json();
                 console.log('auth token: ',data.idToken);
-                authCtx.updateToken(data.idToken);
+                authCtx.updateAuthInfo(data.idToken,emailRef.current.value);
                 // userCtx.updateToken(data.idToken);
                 // history.replace('/');
               }
