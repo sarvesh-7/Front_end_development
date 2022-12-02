@@ -5,6 +5,7 @@ import axios from 'axios';
 const ExpContextProvider = (props)=>{
 
     const[expList, setExpList] = useState([]);
+    const[totalAmt,setTotalAmt] = useState(0);
 
     //firebase database URL path
     const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
@@ -17,6 +18,7 @@ const ExpContextProvider = (props)=>{
             {
                 const data = res.data;
                 let exp_list = [];
+                let exp_total_amt = 0;
                 for(const key in data)
                 {
                    const expObj = {
@@ -24,9 +26,12 @@ const ExpContextProvider = (props)=>{
                         amount : data[key].amount,
                         description : data[key].description,
                         category : data[key].category 
-                    }
+                     }
                  exp_list.push(expObj);
-                } 
+                }
+                exp_list.forEach((expense)=>exp_total_amt += +expense.amount ) ;
+                console.log(exp_total_amt);
+                setTotalAmt(exp_total_amt);
                 setExpList(exp_list);       
             }
             else
@@ -45,19 +50,51 @@ const ExpContextProvider = (props)=>{
          console.log('res', res);
          if(res.status===200){
              alert('Expense stored in database successfully');
-             setExpList((expList)=>[...expList,  expense]);
+            const expObj = {
+                id : res.data.name,
+                ...expense
+            }
+             
+             setExpList((expList)=>[...expList,  expObj]);
+             setTotalAmt((total)=>(total + +expense.amount));
          }
          else{
              alert('Error while storing expense details ');
          }
     }
 
-    const removeExpense=(id)=>{};
+    //delete expense selected by user
+    const removeExpense=async(expToBeDeleted,screen_only)=>{
+
+        //if need to remove from screen as well as backend
+        if(!screen_only){
+            const res = await axios.delete(`${url}/expense/${expToBeDeleted.id}.json`);
+            if(res.status===200)
+            console.log('expense deleted successfully');
+        }
+        //for expense which needs to remove from screen only then only this code will execute
+        expList.splice(expList.indexOf(expToBeDeleted),1);
+        setExpList([...expList]);
+        setTotalAmt((total)=>(total - +expToBeDeleted.amount)); 
+        
+    };
+
+    //edit expense selected by user
+    const editExpense = async(expToBeEdited)=>{
+        const res = await axios.put(`${url}/expense/${expToBeEdited.id}.json`, expToBeEdited);
+        if(res.status===200)
+        console.log('expense edited successfully');
+        //update total amount of all expenses
+        setExpList([...expList,expToBeEdited]);
+        setTotalAmt((total)=>(total + +expToBeEdited.amount)); 
+    }
 
     const expCtx = {
         expenseList : expList,
+        total : totalAmt,
         addExpense : addExpense,
-        removeExpense : removeExpense
+        removeExpense : removeExpense,
+        editExpense:editExpense
     }
 
     return(

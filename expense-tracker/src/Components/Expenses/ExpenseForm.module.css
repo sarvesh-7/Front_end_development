@@ -1,7 +1,6 @@
 .expenseForm{
     width:30%;
-    margin: auto;
-    margin-top: 2rem;
+    margin: 2rem auto 2rem;
     border: 0.2rem solid rgb(196, 89, 89);
     padding: 2rem;
     font-weight: bold;

@@ -1,0 +1,27 @@
+.expList{
+    width:40%;
+    margin: auto;
+}
+
+.container{
+    display:table;
+    width:40%;
+    margin: auto;
+    border-collapse: collapse;
+    }
+ .heading{
+     font-weight: bold;
+     display:table-row;
+     /* background-color:#C91622; */
+     text-align: center;
+     line-height: 25px;
+     font-size: 14px;
+     font-family:georgia;
+    border-bottom: 1px solid grey;
+   
+     
+ }
+
+ .col{ 
+    display:table-cell;
+ }

@@ -1,5 +1,5 @@
 import classes from './ExpenseForm.module.css';
-import {useRef, Fragment, useContext} from 'react';
+import {useRef, Fragment, useContext, useState} from 'react';
 import Button from '../UI/Button';
 import ExpenseList from './ExpenseList';
 import ExpContext from '../Store/ExpContext';
@@ -12,6 +12,9 @@ const ExpenseForm = ()=>{
     const descRef = useRef();
     const categoryRef = useRef();
 
+    //check if user is editing existing expense details
+    const[isEditing,setIsEditing] = useState();
+
     const expCtx = useContext(ExpContext);
 
     const submitExpenseHandler=async(e)=>{
@@ -22,6 +25,27 @@ const ExpenseForm = ()=>{
             category : categoryRef.current.value
         };
         expCtx.addExpense(expObj);
+    }
+
+    const editExpense=(expense)=>{
+        //update expense details into form inputs using ref
+        amountRef.current.value = expense.amount;
+        descRef.current.value = expense.description;
+        categoryRef.current.value = expense.category;
+        setIsEditing(expense.id);
+    };
+
+    const editExpenseHandler=(e)=>{
+        e.preventDefault();
+        //update expense details into backend and show it into frontend
+        const expObj = {
+            id : isEditing,
+            amount : amountRef.current.value,
+            description : descRef.current.value,
+            category : categoryRef.current.value
+        };
+        expCtx.editExpense(expObj);
+        setIsEditing(false);
     }
 
     return(
@@ -39,11 +63,20 @@ const ExpenseForm = ()=>{
             <option value='Loan'>Loan</option>
             <option value='healthcare'>healthcare</option>
             </select>
-            <Button type='submit' onClick={submitExpenseHandler} className={classes.expenseButton}>
-            Add Expense
-            </Button>
+            {
+                !isEditing &&
+                <Button type='submit' onClick={submitExpenseHandler} className={classes.expenseButton}>
+                Add Expense
+                </Button> 
+            }
+            {
+                isEditing &&
+                <Button type='submit' onClick={editExpenseHandler} className={classes.expenseButton}>
+                Edit Expense
+                </Button>
+            } 
         </form>
-        <ExpenseList expenses = {expCtx.expenseList}/>
+        <ExpenseList expenses = {expCtx.expenseList} editExpense={editExpense}/>
         </Fragment>
     )
 };
