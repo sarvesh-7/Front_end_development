@@ -1,12 +1,16 @@
-import React,{useState,useRef,useContext, Fragment} from 'react';
+import React,{useState,useRef, Fragment} from 'react';
 import Button from '../UI/Button';
-import AuthContext from '../Store/AuthContext';
+// import AuthContext from '../Store/AuthContext';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import ForgotPassword from './ForgotPassword';
 import classes from './AuthForm.module.css';
+import {useDispatch,useSelector} from 'react-redux';
+import {authAction} from '../../store/Auth';
 
 const AuthForm = (props) => {
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
     //state to toggle between login/signup function
@@ -20,7 +24,7 @@ const AuthForm = (props) => {
     const passwordRef = useRef();
     const confPasswordRef = useRef();
 
-    const authCtx = useContext(AuthContext);
+    // const authCtx = useContext(AuthContext);
 
     //switch between login/signeup
         const switchAuthModeHandler = () => {
@@ -114,7 +118,8 @@ const AuthForm = (props) => {
 
                 const data = await res.json();
                 console.log('auth token: ',data.idToken);
-                authCtx.updateAuthInfo(data.idToken,emailRef.current.value);
+                // authCtx.updateAuthInfo(data.idToken,emailRef.current.value);
+                dispatch(authAction.updateAuthInfo({token : data.idToken, email : emailRef.current.value}));
                 // userCtx.updateToken(data.idToken);
                 // history.replace('/');
               }

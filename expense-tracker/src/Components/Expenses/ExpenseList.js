@@ -1,17 +1,17 @@
 import ExpenseItem from './ExpenseItem';
 import classes from './ExpenseList.module.css';
-import ExpContext from '../Store/ExpContext';
-import {useContext} from 'react';
+import {useSelector} from 'react-redux';
+
 const ExpenseList = (props)=>{
      
     //get expense details
-    const expCtx = useContext(ExpContext);
-    console.log(expCtx.total);
+    const total = useSelector((state)=>state.expense.total);
+    console.log(total);
 
     return(
 
             <div className={classes.container}>
-                <span>Total Amount : {expCtx.total}</span>
+                <span>Total Amount : {total}</span>
                 <div className={classes.heading}>
                     <div className={classes.col}>Amount</div>
                     <div className={classes.col}>Description </div>

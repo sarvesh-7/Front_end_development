@@ -1,19 +1,18 @@
 import Button from '../Components/UI/Button';
 import classes from './Logout.module.css';
-import AuthContext from '../Components/Store/AuthContext';
-import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {authAction} from '../store/Auth';
 
 const Logout = ()=>{
 
-    //get user auth details
-    const authCtx = useContext(AuthContext);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
     //clear authtoken and email from local storage and go to login page
     const logoutHandler = (e)=>{
-        authCtx.updateAuthInfo('','');
+        dispatch(authAction.updateAuthInfo({token:'',email:''}));
     }
     return(
         <Button onClick={logoutHandler} className={classes.logout}>Logout</Button>

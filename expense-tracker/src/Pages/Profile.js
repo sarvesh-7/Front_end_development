@@ -1,16 +1,20 @@
-import React,{Fragment,useRef,useContext} from 'react';
+import React,{Fragment,useRef} from 'react';
 import {Link} from 'react-router-dom';
 import Button from '../Components/UI/Button';
 import classes from './Profile.module.css';
-import AuthContext from '../Components/Store/AuthContext';
+import {useSelector,useDispatch} from 'react-redux';
+import {authAction} from '../store/Auth';
+
 import axios from 'axios';
 
 const Profile = (props)=>{
 
+    const dispatch = useDispatch();
+    const fullName = useSelector((state)=>state.auth.fullName);
+    const profilePhoto = useSelector((state)=>state.auth.profilePhoto);
+    const token = useSelector((state)=>state.auth.token);
     const fullNameRef = useRef();
     const profileUrlRef = useRef();
-
-    const authCtx = useContext(AuthContext);
 
     //path to update user profile in firebase
     const updateProfileUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAzi_a8TFUiRe70M2TSFzybhf5lVXqu7Wc';
@@ -23,7 +27,7 @@ const Profile = (props)=>{
 
             axios.post(updateProfileUrl,
             {
-                idToken : authCtx.token,
+                idToken : token,
                 displayName : fullName,
                 photoUrl : profileUrl,
                 returnSecureToken : true
@@ -31,7 +35,8 @@ const Profile = (props)=>{
             .then((res)=>
             {
                 alert('Profile updated successfully')
-                authCtx.updateProfile(fullName,profileUrl);
+                // authCtx.updateProfile(fullName,profileUrl);
+                dispatch(authAction.updateProfile({name : fullName, profileUrl : profileUrl}));
             })
             .catch((error)=>{
                 alert('Error while updating profile details');
@@ -44,7 +49,7 @@ const Profile = (props)=>{
         <div className={`${classes.welcome} font-italic`}>
         <p>Winners never quite,quitters never win.</p>
         {
-            !authCtx.fullName && !authCtx.profilePhoto &&
+            !fullName && !profilePhoto &&
             <Fragment>
             <p className={classes.profile}>Your profile is 64% complete.
             <Link to='/profile'>Complete now</Link> 
@@ -52,7 +57,7 @@ const Profile = (props)=>{
             </Fragment>
         }
         {
-            authCtx.fullName && authCtx.profilePhoto &&
+            fullName && profilePhoto &&
             <p className={classes.profile}>
             Your profile is now completed.
             </p>
@@ -66,9 +71,9 @@ const Profile = (props)=>{
             </div>
         <form className={classes.contactForm}> 
             <label forhtml='full_html'>Full Name</label>
-            <input type='text' id='full_html' ref={fullNameRef} defaultValue={authCtx.fullName}/>
+            <input type='text' id='full_html' ref={fullNameRef} defaultValue={fullName}/>
             <label forhtml='profile_url'>Profile Photo URL</label>
-            <input type='url' id='profile_url' ref={profileUrlRef} defaultValue={authCtx.profilePhoto}/>
+            <input type='url' id='profile_url' ref={profileUrlRef} defaultValue={profilePhoto}/>
             <Button type='submit' onClick={updateProfileHandler} className={classes.update}>Update</Button>  
         </form>
         <hr/>
