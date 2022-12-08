@@ -11,7 +11,6 @@ const expenseSlice = createSlice({
     reducers : {
         addExpense(state,action){
             state.expenseList = [...state.expenseList, action.payload];
-            console.log(state.expenseList);
             state.total = state.total + +action.payload.amount;
         },
 

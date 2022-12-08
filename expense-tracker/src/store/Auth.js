@@ -14,7 +14,6 @@ const authSlice = createSlice({
     reducers : {
         updateAuthInfo(state,action)
         {
-            console.log(action.payload.token);
              //update token & email in local storage and update state
              const token = action.payload.token;
              const email = action.payload.email;

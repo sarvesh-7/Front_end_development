@@ -11,7 +11,11 @@ import {authAction} from './store/Auth';
 import axios from 'axios';
 import { expenseAction } from './store/Expense';
 
+
 function App() {
+
+  //get theme
+  const theme = useSelector((state)=>state.theme.theme);
 
   //firebase database URL path
 const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
@@ -90,8 +94,16 @@ const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
 
   const authCtx = useContext(AuthContext);
 
+  //if theme is dark then assign dark theme css class to app div
+  let themeClass;
+  if(theme==='dark')
+    document.body.className='dark-theme';
+    else
+    document.body.className='light-theme';
+
+
   return (
-    <div className="App">
+    <div className='app'>
       <Routes>
       {
         isLoggedin &&

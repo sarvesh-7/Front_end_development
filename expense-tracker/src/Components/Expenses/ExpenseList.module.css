@@ -1,14 +1,17 @@
-.expList{
-    width:40%;
+.main{
+    width:50%;
     margin: auto;
+    padding: auto;
 }
 
 .container{
     display:table;
-    width:40%;
     margin: auto;
-    border-collapse: collapse;
+    padding: auto;
+    border-collapse: separate;
+    border-spacing:1rem;
     }
+
  .heading{
      font-weight: bold;
      display:table-row;
@@ -17,11 +20,16 @@
      line-height: 25px;
      font-size: 14px;
      font-family:georgia;
-    border-bottom: 1px solid grey;
-   
-     
+    border-bottom: 1px solid grey;  
  }
 
  .col{ 
     display:table-cell;
  }
+
+ .amt{
+     display: flex;
+     justify-content: space-around;
+ }
+
+ 

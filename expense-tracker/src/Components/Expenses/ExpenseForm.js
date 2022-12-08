@@ -17,8 +17,6 @@ const ExpenseForm = ()=>{
     const dispatch = useDispatch();
     const expenseList = useSelector((state)=>state.expense.expenseList);
 
-    console.log(expenseList);
-
     //get expense details entered by user
     const amountRef = useRef();
     const descRef = useRef();
