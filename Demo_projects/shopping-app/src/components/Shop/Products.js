@@ -11,6 +11,11 @@ const Products = (props) => {
           price={6}
           description='This is a first product - amazing!'
         />
+         <ProductItem
+          title='Laptop'
+          price={60}
+          description='This laptop is amazing!'
+        />
       </ul>
     </section>
   );
