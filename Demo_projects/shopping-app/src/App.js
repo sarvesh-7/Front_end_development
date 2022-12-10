@@ -5,6 +5,7 @@ import {useSelector,useDispatch} from 'react-redux';
 import {useEffect} from 'react';
 import {UiAction} from './store/Ui';
 import Notification from './components/UI/Notification';
+import {sendCartData,getCartData} from './store/Cart';
 
 function App() {
 
@@ -18,50 +19,11 @@ function App() {
     if(cart.length > 0)
     {
       console.log(cart);
-    //set notification to sending request to the server
-    dispatch(UiAction.showNotification({
-      status : 'pending',
-      title : 'Sending...',
-      message : 'Sending cart data!'
-    }))
-
-    async function fetchCartData()
-    {
-      try
-      {
-      const res = await fetch('https://shopping-app-5eb89-default-rtdb.firebaseio.com/cart.json',
-      {
-        method:'PUT',
-        body:JSON.stringify(cart),
-      });
-
-      if(!res.ok){
-         //set notification to request failed
-          dispatch(UiAction.showNotification({
-            status : 'error',
-            title : 'Error!',
-            message : 'Sending cart data!'
-          }))
-      }
-      else{
-        //set notification requst successfully sent
-        dispatch(UiAction.showNotification({
-          status : 'success',
-          title : 'Success!',
-          message : 'Cart data sent successfully!'
-        }))      
-      }
+      dispatch(sendCartData(cart));
     }
-    catch(error){
-      dispatch(UiAction.showNotification({
-        status : 'success',
-        title : 'Success!',
-        message : 'Cart data sent successfully!'
-      })) 
+    else{
+      dispatch(getCartData());
     }
-    };
-    fetchCartData(); 
-}
   },[cart,dispatch]);
   
   return (
