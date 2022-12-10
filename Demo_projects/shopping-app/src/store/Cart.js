@@ -106,7 +106,7 @@ export const getCartData=()=>{
             else{
                 const items = await res.json();
                 console.log(items);
-
+                
                 for(let i=0;i<items.length; i++){
                    console.log(items[i]); 
                    const product = {
