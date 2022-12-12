@@ -5,10 +5,12 @@ import { useDispatch,useSelector } from 'react-redux';
 import {useState, Fragment, useEffect} from 'react';
 import {premiumAction} from '../../store/Premium';
 
+
 const PremiumFeatures = (props)=>{
 
     const dispatch = useDispatch();
-    const [isPremium,setIsPremium] = useState(false);
+    // const [isPremium,setIsPremium] = useState(false);
+    const isPremium = useSelector((state)=>state.premium.isPremiumAc);
 
     const makeCSV = (rows)=>{
         return rows.map(r=>r.join(',')).join('\n');
@@ -22,23 +24,29 @@ const PremiumFeatures = (props)=>{
 
     const blob = new Blob([makeCSV(data)]);
 
-    console.log(isPremium);
-
-    // useEffect(()=>{
-    //     if(localStorage.getItem('premium_ac')==='true')
-    //     setIsPremium(true);
-    // },[]);
+    useEffect(()=>{
+        if(localStorage.getItem('premium_ac')==='true')
+        {
+            dispatch(premiumAction.activatePremiumAc());
+        }  
+    },[dispatch]);
     
 
 const onClickHandler = ()=>{ 
-    localStorage.setItem('premium_ac', true);
-    // dispatch(premiumAction.activatePremiumAc());
-    setIsPremium(true);
+    if(isPremium){
+        
+        localStorage.setItem('premium_ac', false);
+        dispatch(premiumAction.deactivatePremiumAc());
+        dispatch(themeAction.offTheme());  
+    }
+    else{
+        localStorage.setItem('premium_ac', true);
+        dispatch(premiumAction.activatePremiumAc()); 
+    }
+    console.log(isPremium);
+    // setIsPremium(true);
 }
 
-const downloadFileHanlder = ()=>{
-
-}
 
 const changeThemeHandler = ()=>{
    dispatch(themeAction.toggleTheme()); 
@@ -46,17 +54,27 @@ const changeThemeHandler = ()=>{
 
     return(
         <Fragment>
-        <Button className={classes.premium} type ='click' onClick={onClickHandler}>
-            Activate Premium
-        </Button>
+        {!isPremium && <Button className={classes.premium} type ='click' onClick={onClickHandler}>
+            Activate Premium 
+            </Button>
+        }
         {
-            isPremium && <a download = 'expense.csv' href = {URL.createObjectURL(blob)} type='click' onClick={downloadFileHanlder}>
-                Download CSV file 
+        isPremium && 
+        <Button className={classes.premium} type ='click' onClick={onClickHandler}>
+            Deactivate Premium 
+        </Button>
+        }
+        {
+            isPremium && <a download = 'expense.csv' href = {URL.createObjectURL(blob)} type='click'>
+               <Button className={classes.premium} type ='click'> 
+               <i class="fa fa-download"></i> {}
+               Download expense report
+               </Button>
                 </a>
         }
         {
             isPremium && <Button className={classes.premium} type='click' onClick={changeThemeHandler}>
-                Toggle theme
+                <i class="fa fa-toggle-on"></i>{}Change theme
                 </Button>
         }
 

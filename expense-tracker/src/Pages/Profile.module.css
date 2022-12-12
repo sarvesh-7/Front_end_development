@@ -24,7 +24,6 @@
 
 .profile{
     background-color: rgb(190, 153, 153);
-    border-radius: 0.5rem;
     padding:0.5rem 1rem 0.5rem;
     margin: 0;
 }
@@ -39,7 +38,9 @@
 .main{
     width:50%;
     margin: auto;
-    text-align: left;  
+    text-align: left; 
+    border : 0.2rem solid rgb(196, 89, 89);
+    padding: 0.5rem;
 }
 
 .contactForm{

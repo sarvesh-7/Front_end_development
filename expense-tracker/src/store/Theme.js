@@ -22,13 +22,13 @@ const themeSlice = createSlice({
             if(state.theme === 'light')
             {
                 state.theme = 'dark';
-                localStorage.setItem('theme', 'dark');
             }
             else{
                 state.theme = 'light';
-                localStorage.setItem('theme', 'light');
-            }
-            
+            }  
+        },
+        offTheme(state){
+            state.theme = 'light';
         }
     }
 });

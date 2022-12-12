@@ -17,6 +17,9 @@ const ExpenseForm = ()=>{
     const dispatch = useDispatch();
     const expenseList = useSelector((state)=>state.expense.expenseList);
 
+    //get user's email address
+    const emailID = useSelector(state=>state.auth.email);
+
     //get expense details entered by user
     const amountRef = useRef();
     const descRef = useRef();
@@ -34,7 +37,7 @@ const ExpenseForm = ()=>{
             category : categoryRef.current.value
         };
         //update expense details into firebase database
-        const res = await axios.post(`${url}/expense.json`, expObj);
+        const res = await axios.post(`${url}/${emailID}.json`, expObj);
         console.log('res', res);
 
         if(res.status===200){
@@ -69,7 +72,7 @@ const ExpenseForm = ()=>{
             category : categoryRef.current.value
         };
         
-        const res = await axios.put(`${updateUrl}/expense/${expObj.id}.json`, expObj);
+        const res = await axios.put(`${updateUrl}/${emailID}/${expObj.id}.json`, expObj);
         if(res.status===200)
         console.log('expense edited successfully');
         dispatch(expenseAction.addExpense(expObj));

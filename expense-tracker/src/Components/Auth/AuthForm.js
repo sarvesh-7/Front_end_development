@@ -113,20 +113,14 @@ const AuthForm = (props) => {
                 //if credential matches
                 setIsSendingReq(false);
                 alert('User authenticated successfully');
-                // navigate('/welcome',{replace:true});
             
 
                 const data = await res.json();
-                // authCtx.updateAuthInfo(data.idToken,emailRef.current.value);
                 dispatch(authAction.updateAuthInfo({token : data.idToken, email : emailRef.current.value}));
-                // userCtx.updateToken(data.idToken);
-                // history.replace('/');
               }
               else{
                 //if credentials are wrong
                 const data = await res.json();
-                // console.log(data.error.message);
-                // alert('Weak password : password should be at least 6 characters');
                 alert(data.error.message);
                 setIsSendingReq(false);
             }
@@ -139,7 +133,7 @@ const AuthForm = (props) => {
         }
     }
     return (
-      <React.Fragment>
+      <Fragment>
         <div className={`${classes.authForm} `}>
         <h1>{isLogin ? 'Login' : 'SignUp' }</h1>
         <form onSubmit={onSubmitHandler}>
@@ -169,7 +163,7 @@ const AuthForm = (props) => {
           <button onClick={switchAuthModeHandler} className={classes.switchAuth}>
           {isLogin ? "Don't have an account?Sign Up" : 'Have an account?Login' }</button>
         </div>
-        </React.Fragment>
+        </Fragment>
     )
 }
 export default AuthForm;

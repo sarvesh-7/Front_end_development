@@ -4,6 +4,7 @@ import Button from '../Components/UI/Button';
 import classes from './Profile.module.css';
 import {useSelector,useDispatch} from 'react-redux';
 import {authAction} from '../store/Auth';
+import LoadingSpinner from '../Components/UI/LoadingSpinner';
 
 import axios from 'axios';
 
@@ -35,7 +36,6 @@ const Profile = (props)=>{
             .then((res)=>
             {
                 alert('Profile updated successfully')
-                // authCtx.updateProfile(fullName,profileUrl);
                 dispatch(authAction.updateProfile({name : fullName, profileUrl : profileUrl}));
             })
             .catch((error)=>{
@@ -70,13 +70,14 @@ const Profile = (props)=>{
             <Button className={classes.cancel}>Cancel</Button>
             </div>
         <form className={classes.contactForm}> 
-            <label forhtml='full_html'>Full Name</label>
-            <input type='text' id='full_html' ref={fullNameRef} defaultValue={fullName}/>
-            <label forhtml='profile_url'>Profile Photo URL</label>
-            <input type='url' id='profile_url' ref={profileUrlRef} defaultValue={profilePhoto}/>
+            <label forhtml='full_html'>
+            <i className="fa fa-github"></i> {}Full Name</label>
+            <input type='text' id='full_html' ref={fullNameRef} defaultValue={fullName} required/>
+            <label forhtml='profile_url'>
+            <i className="	fa fa-upload"></i> {}Profile Photo URL</label>
+            <input type='url' id='profile_url' ref={profileUrlRef} defaultValue={profilePhoto} required/>
             <Button type='submit' onClick={updateProfileHandler} className={classes.update}>Update</Button>  
         </form>
-        <hr/>
         </div>
         
         </Fragment>
