@@ -1,4 +1,4 @@
-import React,{Fragment,useRef} from 'react';
+import React,{Fragment,useRef,useState} from 'react';
 import {Link} from 'react-router-dom';
 import Button from '../Components/UI/Button';
 import classes from './Profile.module.css';
@@ -17,12 +17,15 @@ const Profile = (props)=>{
     const fullNameRef = useRef();
     const profileUrlRef = useRef();
 
+    const[status,setStatus] = useState();
+
     //path to update user profile in firebase
     const updateProfileUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAzi_a8TFUiRe70M2TSFzybhf5lVXqu7Wc';
 
     //update user profile in firebase
     const updateProfileHandler = (e)=>{
         e.preventDefault();
+        setStatus('pending');
         const fullName = fullNameRef.current.value;
         const profileUrl = profileUrlRef.current.value;
 
@@ -35,11 +38,13 @@ const Profile = (props)=>{
             })
             .then((res)=>
             {
-                alert('Profile updated successfully')
+                setStatus('completed');
+                alert('Profile updated successfully');
                 dispatch(authAction.updateProfile({name : fullName, profileUrl : profileUrl}));
             })
             .catch((error)=>{
                 alert('Error while updating profile details');
+                setStatus('completed');
                 console.log(error);
             })
     }
@@ -64,11 +69,17 @@ const Profile = (props)=>{
         }
         </div>
         <hr/>
-        <div className={classes.main}>
+        {
+            status==='pending' &&
+            <div className={classes.spinner}><LoadingSpinner/></div>
+        }
+        {
+            status!=='pending' &&
+            <div className={classes.main}>
         <div className={classes.formHeader}>
             <span>Contact Details</span>
             <Button className={classes.cancel}>Cancel</Button>
-            </div>
+        </div>
         <form className={classes.contactForm}> 
             <label forhtml='full_html'>
             <i className="fa fa-github"></i> {}Full Name</label>
@@ -79,7 +90,7 @@ const Profile = (props)=>{
             <Button type='submit' onClick={updateProfileHandler} className={classes.update}>Update</Button>  
         </form>
         </div>
-        
+        }
         </Fragment>
     );
 }

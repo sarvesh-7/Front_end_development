@@ -5,6 +5,7 @@ import ExpenseList from './ExpenseList';
 import axios from 'axios';
 import {useSelector,useDispatch} from 'react-redux';
 import {expenseAction} from '../../store/Expense';
+import LoadingSpinner from '../UI/LoadingSpinner';
 
 const ExpenseForm = ()=>{
 
@@ -27,6 +28,7 @@ const ExpenseForm = ()=>{
 
     //check if user is editing existing expense details
     const[isEditing,setIsEditing] = useState();
+    const[status,setStatus] = useState();
 
 
     const submitExpenseHandler=async(e)=>{
@@ -37,11 +39,13 @@ const ExpenseForm = ()=>{
             category : categoryRef.current.value
         };
         //update expense details into firebase database
+        setStatus('pending');
         const res = await axios.post(`${url}/${emailID}.json`, expObj);
         console.log('res', res);
 
         if(res.status===200){
             alert('Expense stored in database successfully');
+            setStatus('completed');
            const expense = {
                id : res.data.name,
                ...expObj
@@ -50,6 +54,7 @@ const ExpenseForm = ()=>{
         }
         else{
             alert('Error while storing expense details ');
+            setStatus('completed');
         }
 
     }
@@ -71,17 +76,24 @@ const ExpenseForm = ()=>{
             description : descRef.current.value,
             category : categoryRef.current.value
         };
-        
+        setStatus('pending');
         const res = await axios.put(`${updateUrl}/${emailID}/${expObj.id}.json`, expObj);
         if(res.status===200)
         console.log('expense edited successfully');
+        setStatus('completed');
         dispatch(expenseAction.addExpense(expObj));
         setIsEditing(false);
     }
 
     return(
         <Fragment>
-        <form className={classes.expenseForm}>
+        {
+            status === 'pending' &&
+            <div className={classes.spinner}>
+            <LoadingSpinner/>
+            </div>
+        }
+            <form className={classes.expenseForm}>
             <label htmlFor='exp_amt'>Amount</label>
             <input type='number' id='exp_amt' ref={amountRef}/>
             <label htmlFor='exp_desc'>Description</label>

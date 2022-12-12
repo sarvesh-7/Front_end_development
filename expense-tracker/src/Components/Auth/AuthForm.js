@@ -7,6 +7,7 @@ import ForgotPassword from './ForgotPassword';
 import classes from './AuthForm.module.css';
 import {useDispatch,useSelector} from 'react-redux';
 import {authAction} from '../../store/Auth';
+import LoadingSpinner from '../UI/LoadingSpinner';
 
 const AuthForm = (props) => {
 
@@ -18,6 +19,7 @@ const AuthForm = (props) => {
 
      //state to show sending request loader
     const[isSendingReq, setIsSendingReq] = useState(false);
+    const[status,setStatus] = useState();
 
     //get entered email and password
     const emailRef = useRef();
@@ -62,6 +64,7 @@ const AuthForm = (props) => {
             else
             {
                 try{
+                  setStatus('pending');
                     const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAzi_a8TFUiRe70M2TSFzybhf5lVXqu7Wc',
                   {
                     method:'POST',
@@ -77,6 +80,7 @@ const AuthForm = (props) => {
                   if(res.ok){
                     //when succesfully created account
                     setIsSendingReq(false);
+                    setStatus('completed');
                     alert('User created successfully');
                   }
                   else{
@@ -85,11 +89,13 @@ const AuthForm = (props) => {
                     console.log(data.error.message);
                     alert(data.error.message);
                     setIsSendingReq(false);
+                    setStatus('completed');
                   }
                   }
                   catch(error){
                     console.log(error);
                     setIsSendingReq(false);
+                    setStatus('completed');
                   }
             }
         }
@@ -97,6 +103,7 @@ const AuthForm = (props) => {
         else
         {
             try{
+              setStatus('pending');
                 const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAzi_a8TFUiRe70M2TSFzybhf5lVXqu7Wc',
               {
                 method:'POST',
@@ -111,6 +118,7 @@ const AuthForm = (props) => {
               });
               if(res.ok){
                 //if credential matches
+                setStatus('completed');
                 setIsSendingReq(false);
                 alert('User authenticated successfully');
             
@@ -120,6 +128,7 @@ const AuthForm = (props) => {
               }
               else{
                 //if credentials are wrong
+                setStatus('completed');
                 const data = await res.json();
                 alert(data.error.message);
                 setIsSendingReq(false);
@@ -127,6 +136,7 @@ const AuthForm = (props) => {
           }
             catch(error){
               //do something
+              setStatus('completed');
               console.log(error.message);
               setIsSendingReq(false);
             }
@@ -134,6 +144,12 @@ const AuthForm = (props) => {
     }
     return (
       <Fragment>
+        {
+           status === 'pending' &&
+           <div className={classes.spinner}>
+           <LoadingSpinner/>
+           </div>
+        }
         <div className={`${classes.authForm} `}>
         <h1>{isLogin ? 'Login' : 'SignUp' }</h1>
         <form onSubmit={onSubmitHandler}>

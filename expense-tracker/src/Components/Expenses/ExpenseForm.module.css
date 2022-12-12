@@ -12,3 +12,10 @@
     background-color: rgb(196, 89, 89);
     color : white;
 }
+
+.spinner{
+    position: fixed;
+    top: 30%;
+    left:45%;
+    margin: auto;
+}

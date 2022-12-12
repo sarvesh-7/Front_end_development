@@ -31,3 +31,10 @@
     margin-top: 0.5rem;
     width: 100%;
 }
+
+.spinner{
+    position: absolute;
+    top: 30%;
+    left:45%;
+    margin: auto;
+}

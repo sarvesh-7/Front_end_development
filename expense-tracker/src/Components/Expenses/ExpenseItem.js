@@ -3,10 +3,13 @@ import Button from '../UI/Button';
 import {useDispatch,useSelector} from 'react-redux';
 import {expenseAction} from '../../store/Expense';
 import axios from 'axios';
-import React,{Fragment} from 'react';
+import React,{Fragment,useState} from 'react';
+import LoadingSpinner from '../UI/LoadingSpinner';
 
 const ExpenseItem = (props)=>{;
     const dispatch = useDispatch();
+
+    const[status,setStatus] = useState();
 
     //firebase database URL path
     const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
@@ -17,10 +20,14 @@ const ExpenseItem = (props)=>{;
     const removeExpense=async()=>{
 
         //need to remove from screen as well as backend
+        setStatus('pending');
             const res = await axios.delete(`${url}/${emailID}/${props.expense.id}.json`);
             if(res.status===200)
-            console.log('expense deleted successfully');
-            dispatch(expenseAction.removeExpense(props.expense));
+            {
+              setStatus('completed');
+              console.log('expense deleted successfully');
+              dispatch(expenseAction.removeExpense(props.expense));
+            }
     }
 
     //edit expenses
@@ -34,6 +41,13 @@ const ExpenseItem = (props)=>{;
     }
 
     return(
+      <Fragment>
+         {
+            status === 'pending' &&
+            <div className={classes.spinner}>
+            <LoadingSpinner/>
+            </div>
+            }
             <div className={classes['table-row']} id='expDiv'>
             <div className={classes.col}>{props.expense.amount}</div>
             <div className={classes.col}>{props.expense.description}</div>
@@ -45,6 +59,7 @@ const ExpenseItem = (props)=>{;
               <i className='fa fa-edit'></i>
               </Button>
             </div>
+        </Fragment>
     ) 
 };
 export default ExpenseItem;

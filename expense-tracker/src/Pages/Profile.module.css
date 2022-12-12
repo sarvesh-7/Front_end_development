@@ -46,3 +46,9 @@
 .contactForm{
     margin: 1rem 0.5rem 1rem;
 }
+.spinner{
+    position: absolute;
+    top: 30%;
+    left:50%;
+    margin: auto;
+}
