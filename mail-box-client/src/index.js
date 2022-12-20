@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import {BrowserRouter} from 'react-router-dom';
+import store from './Store/index';
+import {Provider} from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 
 //Bootstrap configuration
@@ -11,7 +14,11 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
+    <BrowserRouter>
     <App />
+    </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
