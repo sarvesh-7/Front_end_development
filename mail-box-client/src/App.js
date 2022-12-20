@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import Button from 'react-bootstrap/Button';
 import NavBar from './Components/Layout/NavigationBar';
 import AuthForm from './Components/Auth/AuthForm';
 import {Routes,Route,Navigate} from 'react-router-dom';
@@ -18,26 +16,23 @@ function App() {
 
     const token = localStorage.getItem('TOKEN');
     const email = localStorage.getItem('EMAIL');
-    console.log(token,email);
 
     if(token && email)
-      dispatch(authActions.updateAuthInfo(token,email));
+      dispatch(authActions.updateAuthInfo({token,email}));
 
   },[dispatch]);
 
   const token = useSelector(state=>state.auth.token);
-  console.log(token);
 
   return (
-    <>  
+     <Routes>
      {
-       !token && 
-       <>
-       <NavBar/>
-       <AuthForm/>
+       !token &&
+       <> 
+       <Route path="*" element = {<Navigate to='/' replace={true}/>}/>
+       <Route path='/' element={<><NavBar/><AuthForm/></>}/>
        </>
      }
-     <Routes>
      {
        token && 
        <>
@@ -46,8 +41,6 @@ function App() {
        </>
      }
      </Routes>
-     
-    </>
   );
 }
 
