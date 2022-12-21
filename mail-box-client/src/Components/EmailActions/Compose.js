@@ -11,7 +11,7 @@ const Compose = (props)=>{
 
     //firebase realtime database URL
     const url = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com/';
-    const sender = localStorage.getItem('EMAIL');
+    const senderEmail = localStorage.getItem('EMAIL');
 
     const toEmailRef = useRef();
     const subjectRef = useRef();
@@ -29,7 +29,9 @@ const Compose = (props)=>{
     const sendEmailHandler=async()=>{
 
         //updat sentbox and inbox emails in firebase
+        const sender = senderEmail.replace(/['@.']/g,''); 
         const receiver = toEmailRef.current.value.replace(/['@.']/g,'');
+
         if(!receiver)
             alert('Add atleast one recipient');
         else if(!message)
@@ -37,31 +39,41 @@ const Compose = (props)=>{
         else{
             try
             {
-                const sendingRes = await axios.post(`${url}sentbox/${sender}/${receiver}.json`,
+                const date = new Date();
+                const curr_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+                const curr_time= date.getHours()+":"+date.getMinutes();
+
+                const sendingRes = await axios.post(`${url}sentbox/${sender}.json`,
                 {
                     subject:subjectRef.current.value,
-                    message
+                    message,
+                    receiver : toEmailRef.current.value,
+                    sent_date : curr_date,
+                    sent_time : curr_time
                 }                
              );
 
-             if(sendingRes.status!==200)
-                 throw new Error('Something went wrong! Please try again later..');
-
-             const receivingRes = await axios.post(`${url}inbox/${receiver}/${sender}.json`,
+             if(sendingRes.status===200)
              {
-                 subject:subjectRef.current.value,
-                 message
+                const receivingRes = await axios.post(`${url}inbox/${receiver}.json`,
+                {
+                    subject:subjectRef.current.value,
+                    message,
+                    sender : senderEmail,
+                    sent_date : curr_date,
+                    sent_time : curr_time
+                }
+               );
+               if(receivingRes.status===200)
+                alert('Email sent!');
+                else
+                alert('Something went wrong! Please try again later..');
              }
-            );
-            
-            if(receivingRes.status!==200)
-            throw new Error('Something went wrong! Please try again later..');
-
-            alert('Email sent!');
-
+             else
+                alert('Something went wrong! Please try again later..');
             }
             catch(error){
-                alert(error);
+                alert('Something went wrong! Please try again later..');
             }  
         }
     }

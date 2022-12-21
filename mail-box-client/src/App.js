@@ -39,7 +39,7 @@ function App() {
        token && 
        <>
        <Route path='/' element = {<Navigate to='/Welcome' replace={true}/>}/>
-       <Route path="/welcome" element={<Welcome/>}/>
+       <Route path="/welcome/*" element={<Welcome/>}/>
        </>
      }
      </Routes>

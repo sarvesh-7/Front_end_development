@@ -102,14 +102,11 @@ const AuthForm = ()=>{
           alert('User authenticated successfully');
           const data = await res.json();
 
-          //remove @. from email for better handling of user specific API calls 
-          const convertedEmail = email.replace(/['@.']/g,'');
-
           //update auth details in redux store
-          dispatch(authActions.updateAuthInfo({token : data.idToken, email : convertedEmail}));
+          dispatch(authActions.updateAuthInfo({token : data.idToken, email : email}));
 
           //update in local storage
-          localStorage.setItem('EMAIL',convertedEmail);
+          localStorage.setItem('EMAIL',email);
           localStorage.setItem('TOKEN', data.idToken);
         }
         else{
