@@ -4,12 +4,17 @@ import {useEffect,useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {MailsAction} from '../../Store/Mails';
+import {useDispatch,useSelector} from 'react-redux';
 
 
 const Inbox = ()=>{
 
     const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
-    const[emails,setEmails] = useState([]); 
+    // const[emails,setEmails] = useState([]); 
+
+    const dispatch = useDispatch();
+    const emails = useSelector(state=>state.mails.mails);
     
     useEffect(
         ()=>{
@@ -31,7 +36,8 @@ const Inbox = ()=>{
                                  sent_date:res.data[key].sent_date,
                                  sent_time:res.data[key].sent_time});
                         } 
-                        setEmails(emailsArr);
+                        // setEmails(emailsArr);
+                        dispatch(MailsAction.addMails({mails : emailsArr}));
                     }
                 }
                 catch(error){
@@ -48,6 +54,7 @@ const Inbox = ()=>{
             <Card.Body>
                 <Container>
                 {
+                    emails &&
                     emails.map((email)=>{
                         return <><Row key={email.id} className="fw-bold">
                             <Col lg={4}>{email.sender}</Col>
