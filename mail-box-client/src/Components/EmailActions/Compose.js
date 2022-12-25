@@ -62,7 +62,8 @@ const Compose = (props)=>{
                     message,
                     sender : senderEmail,
                     sent_date : curr_date,
-                    sent_time : curr_time
+                    sent_time : curr_time,
+                    seen : false
                 }
                );
                if(receivingRes.status===200)
@@ -80,8 +81,7 @@ const Compose = (props)=>{
     }
 
     return(
-        <Card>
-            <Card.Body>
+        <>
                 <Form.Control size="sm" className='mb-3' ref={toEmailRef} type="email" placeholder="To"/>
                 <Form.Control size="sm" className='mb-3' ref={subjectRef} type="text" placeholder="Subject"/>
                 <Editor
@@ -90,11 +90,10 @@ const Compose = (props)=>{
                 editorClassName={classes.editor}
                 onChange={getEmailMsgHandler}
                 />
-            </Card.Body>
-            <Card.Footer>
+                <Card.Footer>
                 <Button onClick={sendEmailHandler}>Send</Button>
-            </Card.Footer>
-        </Card>
+                </Card.Footer>
+        </>
     )
 };
 

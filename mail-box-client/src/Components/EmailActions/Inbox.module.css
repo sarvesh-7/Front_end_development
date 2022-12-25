@@ -1,0 +1,14 @@
+.row:hover{
+    cursor: pointer;
+    border:1px solid black;
+}
+
+.row{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.mailBox{
+    text-decoration: none;
+    color:black;
+}

@@ -1,72 +1,37 @@
 import Card from 'react-bootstrap/Card';
-import axios from 'axios';
-import {useEffect,useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {MailsAction} from '../../Store/Mails';
 import {useDispatch,useSelector} from 'react-redux';
-
+import classes from './Inbox.module.css';
+import {Route,Routes,useNavigate,Link,NavLink} from 'react-router-dom';
 
 const Inbox = ()=>{
-
-    const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
-    // const[emails,setEmails] = useState([]); 
-
-    const dispatch = useDispatch();
-    const emails = useSelector(state=>state.mails.mails);
     
-    useEffect(
-        ()=>{
-            const getEmails = async()=>
-            {
-                try
-                {
-                    const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-                    const res = await axios.get(`${getURL}/inbox/${receiver}.json`);
-                    if(res.status===200)
-                    {
-                        let emailsArr = [];
-                        for(const key in res.data)
-                        {
-                            emailsArr.push(
-                                {id: key ,
-                                 sender:res.data[key].sender,
-                                 subject:res.data[key].subject,
-                                 sent_date:res.data[key].sent_date,
-                                 sent_time:res.data[key].sent_time});
-                        } 
-                        // setEmails(emailsArr);
-                        dispatch(MailsAction.addMails({mails : emailsArr}));
-                    }
-                }
-                catch(error){
-                    alert('Could not fetch emails due to some issues!');
-                }
-                  
-            }
-            getEmails();
-        },[]
-    )
-    console.log(emails);
-    return(
-        <Card>
-            <Card.Body>
+    const emails = useSelector(state=>state.mails.mails);
+
+    return(    
                 <Container>
                 {
                     emails &&
                     emails.map((email)=>{
-                        return <><Row key={email.id} className="fw-bold">
-                            <Col lg={4}>{email.sender}</Col>
+                        return <>
+                    <NavLink className={classes.mailBox} to={`/Welcome/Inbox/${email.id}`} state={{email : email}}>
+                        <Row key={email.id} className={`${classes.row} ${!email.seen && 'fw-bold'}`}>
+                            <Col lg={4}>
+                            {!email.seen &&  
+                            <i class="fa fa-circle" style={{fontSize:'10px', color:'blue', marginRight:'1rem'}}></i>
+                            }
+                            {email.sender}</Col>
                             <Col lg={5}>{email.subject}</Col>
                             <Col lg={2}>{email.sent_date}</Col>
                             <Col lg={1}>{email.sent_time}</Col> 
-                        </Row><hr/></>
+                        </Row>
+                    </NavLink>
+                    <hr/></>
                     })
                 }
                 </Container>
-            </Card.Body>
-        </Card>
     )
 };
 export default Inbox;

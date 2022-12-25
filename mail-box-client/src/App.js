@@ -4,15 +4,21 @@ import AuthForm from './Components/Auth/AuthForm';
 import {Routes,Route,Navigate} from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
 import Welcome from './Pages/Welcome';
+import Inbox from './Components/EmailActions/Inbox';
+import Compose from './Components/EmailActions/Compose';
+import EmailMessage from './Components/EmailActions/EmailMessage';
 import {useEffect} from 'react';
 import {authActions} from './Store/Auth';
-
-
+import {MailsAction} from './Store/Mails';
+import axios from 'axios';
 
 function App() {
 
+  const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
   const dispatch = useDispatch();
 
+
+  
   //make login state persistant
   useEffect(()=>{
 
@@ -25,6 +31,43 @@ function App() {
   },[dispatch]);
 
   const token = useSelector(state=>state.auth.token);
+
+  useEffect(
+    ()=>{
+      console.log('IN app.js');
+      if(token){
+        const getEmails = async()=>
+        {
+            try
+            {
+                const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
+                const res = await axios.get(`${getURL}/inbox/${receiver}.json`);
+                if(res.status===200)
+                {
+                    let emailsArr = [];
+                    for(const key in res.data)
+                    {
+                        emailsArr.push(
+                            {id: key ,
+                             sender:res.data[key].sender,
+                             subject:res.data[key].subject,
+                             message:res.data[key].message,
+                             sent_date:res.data[key].sent_date,
+                             sent_time:res.data[key].sent_time,
+                             seen:res.data[key].seen});
+                    } 
+                    // setEmails(emailsArr);
+                    dispatch(MailsAction.addMails({mails : emailsArr}));
+                }
+            }
+            catch(error){
+                alert('Could not fetch emails due to some issues!');
+            }
+          } 
+          getEmails();  
+        }
+    },[dispatch,getURL,token]
+)
 
   return (
      <Routes>
@@ -39,7 +82,12 @@ function App() {
        token && 
        <>
        <Route path='/' element = {<Navigate to='/Welcome' replace={true}/>}/>
-       <Route path="/welcome/*" element={<Welcome/>}/>
+       
+       <Route path="/Welcome" element={<Welcome/>}>
+         <Route path="/Welcome/Compose" element={<Compose/>} />
+         <Route path={`/Welcome/Inbox/:msgId`} element={<EmailMessage/>}/>
+         <Route path='/Welcome/Inbox' element={<Inbox/>}/>
+       </Route> 
        </>
      }
      </Routes>

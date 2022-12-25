@@ -1,28 +1,38 @@
 import Button from 'react-bootstrap/Button';
-import classes from './Welcome.module.css';
 import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {useState} from 'react';
-import Compose from '../Components/EmailActions/Compose';
-import Inbox from '../Components/EmailActions/Inbox';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,Outlet} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 const Welcome = ()=>{
-    const[emailAction,setEmailAction] = useState('');
     const navigate = useNavigate();
+
+    const emails = useSelector(state=>state.mails.mails);
 
     //set email action type
     const composeEmailHandler=(e)=>{
-        setEmailAction('Compose');
-        navigate('/Welcome/Compose',{replace:true});
+        // setEmailAction('Compose');
+        navigate('/Welcome/Compose');
     }
 
     const InboxHandler=(e)=>{
-        setEmailAction('Inbox');
+        // setEmailAction('Inbox');
         navigate('/Welcome/Inbox');
     }
 
+    //count unseen messages
+    let unSeenMailsCount = 0;
+
+    if(emails)
+    {
+        emails.forEach((email)=>{
+            if(!email.seen)
+            unSeenMailsCount++;
+        })
+    }
+    
     return(
         <>
         <h1>Welcome to mail Box client</h1><hr/>
@@ -35,15 +45,19 @@ const Welcome = ()=>{
                 <div className="d-grid mb-2">
                     <Button onClick={InboxHandler}>Inbox</Button>
                 </div>
+                <div>
+                    Unseen Messages : {unSeenMailsCount}
+                </div>
                 </Col>
                 <Col lg={10}>
                     {
-                        emailAction === 'Compose' &&
-                        <Compose/>
+                        <Card>
+                        <Card.Body>
+                        <Outlet/>
+                        </Card.Body>
+                        </Card>
                     } 
-                    {
-                        emailAction === 'Inbox' &&
-                        <Inbox/>
+                    {  
                     }
                 </Col>
             </Row>
