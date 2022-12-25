@@ -4,11 +4,16 @@
 }
 
 .row{
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
 }
 
 .mailBox{
     text-decoration: none;
     color:black;
+}
+
+a{
+    padding: 0px;
+    display: inline;
 }

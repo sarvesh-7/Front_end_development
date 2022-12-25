@@ -15,21 +15,14 @@ const MailsSlice = createSlice(
             },
             editMail(state,action){
                 let mailsArr = state.mails;
-                console.log(mailsArr);
                 const index = mailsArr.findIndex((mail)=>mail.id===action.payload.email.id);
                 mailsArr[index] = action.payload.email;
-                
-                // mailsArr.forEach((mail)=>{
-                //     if(mail.id===action.payload.email.id)
-                //     {
-                //         mail = action.payload.email;
-                //         console.log(mail);
-                //         console.log(mailsArr);
-                //         return;
-                //     }   
-                // });
-                console.log(mailsArr);
                 state.mails = mailsArr;
+            },
+            deleteMail(state,action){
+                let mailToBeDeleted = action.payload.email;
+                const index = state.mails.findIndex((mail)=>mail.id===mailToBeDeleted.id);
+                state.mails.splice(index,1);
             }
         }   
     }

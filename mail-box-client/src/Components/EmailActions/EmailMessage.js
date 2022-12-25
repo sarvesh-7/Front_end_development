@@ -3,6 +3,7 @@ import axios from 'axios';
 import {MailsAction} from '../../Store/Mails';
 import {useDispatch} from 'react-redux';
 import {useEffect} from 'react';
+import Card from 'react-bootstrap/Card';
 
 const EmailMessage = ()=>{
     const location = useLocation();
@@ -35,13 +36,18 @@ const EmailMessage = ()=>{
 
 return(
     <>
+    <Card.Header>
     <h4>From : {email.sender}</h4>
     <h6>To : {localStorage.getItem('EMAIL')}</h6>
+    <h6>Subject : {email.subject}</h6>
+    </Card.Header>
+    <Card.Body>
     {
         email.message.map((data)=>{
             return <div>{data}</div>
         })
     }
+    </Card.Body>
     </>
 )
 }

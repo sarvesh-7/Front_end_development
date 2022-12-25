@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {useNavigate,Outlet} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import Logout from '../Components/Auth/Logout';
+import classes from './Welcome.module.css';
 
 const Welcome = ()=>{
     const navigate = useNavigate();
@@ -13,12 +15,10 @@ const Welcome = ()=>{
 
     //set email action type
     const composeEmailHandler=(e)=>{
-        // setEmailAction('Compose');
         navigate('/Welcome/Compose');
     }
 
     const InboxHandler=(e)=>{
-        // setEmailAction('Inbox');
         navigate('/Welcome/Inbox');
     }
 
@@ -35,7 +35,10 @@ const Welcome = ()=>{
     
     return(
         <>
-        <h1>Welcome to mail Box client</h1><hr/>
+        <div className={classes.header}>
+        <h3>Welcome to your Mail Box</h3>
+        <Logout/>
+        </div>
         <Container>
             <Row>
                 <Col lg={2}>
