@@ -5,8 +5,10 @@ import {Routes,Route,Navigate} from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
 import Welcome from './Pages/Welcome';
 import Inbox from './Components/EmailActions/Inbox';
+import Sentbox from './Components/EmailActions/Sentbox';
 import Compose from './Components/EmailActions/Compose';
 import EmailMessage from './Components/EmailActions/EmailMessage';
+import SentEmailMessage from './Components/EmailActions/SentEmailMessage';
 import {useEffect} from 'react';
 import {authActions} from './Store/Auth';
 import {MailsAction} from './Store/Mails';
@@ -85,8 +87,10 @@ function App() {
        
        <Route path="/Welcome" element={<Welcome/>}>
          <Route path="/Welcome/Compose" element={<Compose/>} />
-         <Route path={`/Welcome/Inbox/:msgId`} element={<EmailMessage/>}/>
+         <Route path='/Welcome/Inbox/:msgId' element={<EmailMessage/>}/>
          <Route path='/Welcome/Inbox' element={<Inbox/>}/>
+         <Route path='/Welcome/Sentbox' element={<Sentbox/>}/>
+         <Route path='/Welcome/Sentbox/:msgId' element={<SentEmailMessage/>}/>
        </Route> 
        </>
      }

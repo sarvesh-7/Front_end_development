@@ -1,7 +1,8 @@
 import {createSlice,current} from '@reduxjs/toolkit';
 // import {current} from 'react-redux';
 const initialMailState = {
-    mails : []
+    mails : [],
+    sentBox : []
 }
 
 const MailsSlice = createSlice(
@@ -23,6 +24,14 @@ const MailsSlice = createSlice(
                 let mailToBeDeleted = action.payload.email;
                 const index = state.mails.findIndex((mail)=>mail.id===mailToBeDeleted.id);
                 state.mails.splice(index,1);
+            },
+            addSentMails(state,action){
+                state.sentBox = action.payload.mails;
+            },
+            deleteSentMail(state,action){
+                let mailToBeDeleted = action.payload.email;
+                const index = state.sentBox.findIndex((mail)=>mail.id===mailToBeDeleted.id);
+                state.sentBox.splice(index,1);
             }
         }   
     }

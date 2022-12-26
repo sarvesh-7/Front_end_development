@@ -22,6 +22,10 @@ const Welcome = ()=>{
         navigate('/Welcome/Inbox');
     }
 
+    const SentboxHandler=(e)=>{
+        navigate('/Welcome/Sentbox');
+    }
+
     //count unseen messages
     let unSeenMailsCount = 0;
 
@@ -47,6 +51,9 @@ const Welcome = ()=>{
                 </div>
                 <div className="d-grid mb-2">
                     <Button onClick={InboxHandler}>Inbox</Button>
+                </div>
+                <div className="d-grid mb-2">
+                    <Button onClick={SentboxHandler}>Sentbox</Button>
                 </div>
                 <div>
                     Unseen Messages : {unSeenMailsCount}
