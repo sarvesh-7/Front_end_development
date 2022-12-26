@@ -4,14 +4,55 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {useNavigate,Outlet} from 'react-router-dom';
-import {useSelector} from 'react-redux';
 import Logout from '../Components/Auth/Logout';
 import classes from './Welcome.module.css';
+import {useSelector,useDispatch} from 'react-redux';
+import axios from 'axios';
+import {MailsAction} from '../Store/Mails';
+import {useEffect} from 'react';
 
 const Welcome = ()=>{
     const navigate = useNavigate();
 
     const emails = useSelector(state=>state.mails.mails);
+    const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
+    const dispatch = useDispatch();
+
+    //get all mails in inbox
+  useEffect(
+    ()=>{
+        const getEmailsInterval = setInterval(async()=>
+        {
+          console.log('my interval', getEmailsInterval);
+            try
+            {
+                const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
+                const res = await axios.get(`${getURL}/inbox/${receiver}.json`);
+                if(res.status===200)
+                {
+                    let emailsArr = [];
+                    for(const key in res.data)
+                    {
+                        emailsArr.push(
+                            {id: key ,
+                             sender:res.data[key].sender,
+                             subject:res.data[key].subject,
+                             message:res.data[key].message,
+                             sent_date:res.data[key].sent_date,
+                             sent_time:res.data[key].sent_time,
+                             seen:res.data[key].seen});
+                    } 
+                    // setEmails(emailsArr);
+                    dispatch(MailsAction.addMails({mails : emailsArr}));
+                }
+            }
+            catch(error){
+                alert('Could not fetch emails due to some issues!');
+            }
+          },2000);
+          return ()=> clearInterval(getEmailsInterval); 
+    },[dispatch,getURL]
+);
 
     //set email action type
     const composeEmailHandler=(e)=>{
