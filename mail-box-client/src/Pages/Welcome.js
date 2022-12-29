@@ -10,6 +10,7 @@ import {useSelector,useDispatch} from 'react-redux';
 import axios from 'axios';
 import {MailsAction} from '../Store/Mails';
 import {useEffect} from 'react';
+import useHttp from '../Hooks/use-http';
 
 const Welcome = ()=>{
     const navigate = useNavigate();
@@ -18,40 +19,41 @@ const Welcome = ()=>{
     const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
     const dispatch = useDispatch();
 
+    const {isLoading, error, sendRequest} = useHttp();
+
     //get all mails in inbox
   useEffect(
     ()=>{
-        const getEmailsInterval = setInterval(async()=>
+    const transformMails = (emails)=>{
+        let emailsArr = [];
+        // console.log(emails);
+        for(const key in emails)
         {
-          console.log('my interval', getEmailsInterval);
-            try
+            emailsArr.push(
             {
-                const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-                const res = await axios.get(`${getURL}/inbox/${receiver}.json`);
-                if(res.status===200)
-                {
-                    let emailsArr = [];
-                    for(const key in res.data)
-                    {
-                        emailsArr.push(
-                            {id: key ,
-                             sender:res.data[key].sender,
-                             subject:res.data[key].subject,
-                             message:res.data[key].message,
-                             sent_date:res.data[key].sent_date,
-                             sent_time:res.data[key].sent_time,
-                             seen:res.data[key].seen});
-                    } 
-                    // setEmails(emailsArr);
-                    dispatch(MailsAction.addMails({mails : emailsArr}));
-                }
-            }
-            catch(error){
-                alert('Could not fetch emails due to some issues!');
-            }
-          },2000);
-          return ()=> clearInterval(getEmailsInterval); 
-    },[dispatch,getURL]
+                id: key ,
+                sender:emails[key].sender,
+                subject:emails[key].subject,
+                message:emails[key].message,
+                sent_date:emails[key].sent_date,
+                sent_time:emails[key].sent_time,
+                seen:emails[key].seen
+            });
+        }
+        // console.log(emailsArr); 
+        dispatch(MailsAction.addMails({mails : emailsArr}));
+    }
+
+        // const getEmailsInterval = setInterval(async()=>
+        // {
+        //   console.log('my interval', getEmailsInterval);
+          const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
+          sendRequest({type : 'get' , URL:`${getURL}/inbox/${receiver}.json`}, transformMails);
+        //   },
+        // 2000);
+
+        // return ()=> clearInterval(getEmailsInterval); 
+    },[dispatch,getURL,sendRequest]
 );
 
     //set email action type

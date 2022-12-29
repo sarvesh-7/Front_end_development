@@ -4,6 +4,7 @@ import {MailsAction} from '../../Store/Mails';
 import {useDispatch} from 'react-redux';
 import {useEffect} from 'react';
 import Card from 'react-bootstrap/Card';
+import useHttp from '../../Hooks/use-http';
 
 const EmailMessage = ()=>{
     const location = useLocation();
@@ -13,6 +14,8 @@ const EmailMessage = ()=>{
     const putURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
 
     const dispatch = useDispatch();
+
+    const{isLoading,status,sendRequest} = useHttp();
 
     useEffect(()=>{
         const markEmailsAsSeen = async()=>{
@@ -26,8 +29,11 @@ const EmailMessage = ()=>{
                 sent_time:email.sent_time,
                 seen:true
             }
-            const res = await axios.put(`${putURL}/inbox/${receiver}/${email.id}.json`,updatedEmail);
-            console.log(res);
+            sendRequest({type:'put',URL:`${putURL}/inbox/${receiver}/${email.id}.json`,
+            body : updatedEmail
+            });
+            // const res = await axios.put(`${putURL}/inbox/${receiver}/${email.id}.json`,updatedEmail);
+            // console.log(res);
             dispatch(MailsAction.editMail({email : updatedEmail}));
         }
     markEmailsAsSeen();

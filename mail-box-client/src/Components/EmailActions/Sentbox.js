@@ -8,6 +8,7 @@ import {Route,Routes,useNavigate,Link,NavLink} from 'react-router-dom';
 import axios from 'axios';
 import {MailsAction} from '../../Store/Mails';
 import {useEffect} from 'react';
+import useHttp from '../../Hooks/use-http';
 
 const Sentbox = ()=>{
     
@@ -15,61 +16,39 @@ const Sentbox = ()=>{
     const deleteURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com/';
     const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
     const dispatch = useDispatch();
+    const {isLoading,error,sendRequest} = useHttp();
 
     useEffect(
         ()=>{
-            const getEmails = async()=>
-            {
-                try
+            const transformMails=(email)=>{
+                let emailsArr = [];
+                console.log('received mails', email);
+                for(const key in email)
                 {
-                    const sender = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-                    const res = await axios.get(`${getURL}/sentbox/${sender}.json`);
-                    if(res.status===200)
+                    emailsArr.push(
                     {
-                        let emailsArr = [];
-                        for(const key in res.data)
-                        {
-                            emailsArr.push(
-                                {id: key ,
-                                 receiver:res.data[key].receiver,
-                                 subject:res.data[key].subject,
-                                 message:res.data[key].message,
-                                 sent_date:res.data[key].sent_date,
-                                 sent_time:res.data[key].sent_time,
-                                });
-                        } 
-                        console.log(res.data);
-                        dispatch(MailsAction.addSentMails({mails : emailsArr}));
-                    }
-                }
-                catch(error){
-                    alert('Could not fetch emails due to some issues!');
-                }
-              } 
-              getEmails();  
-        },[dispatch,getURL]
+                        id: key ,
+                        receiver:email[key].receiver,
+                        subject:email[key].subject,
+                        message:email[key].message,
+                        sent_date:email[key].sent_date,
+                        sent_time:email[key].sent_time,
+                    });
+                } 
+                console.log(emailsArr, 'sentbox');
+                dispatch(MailsAction.addSentMails({mails : emailsArr}));
+            }
+            const sender = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
+            // const res = await axios.get(`${getURL}/sentbox/${sender}.json`);
+            sendRequest({type:'get',URL:`${getURL}/sentbox/${sender}.json`},transformMails); 
+        },[dispatch,getURL,sendRequest]
     )
 
     const deleteMailHandler = async(email)=>{
         const sender = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-        try
-        {
-            const res = await axios.delete(`${deleteURL}sentbox/${sender}/${email.id}.json`);
-            if(res.status===200)
-            {
-                alert('deletion successful');
-                dispatch(MailsAction.deleteSentMail({email}));
-            }
-            else{
-                alert('Something went wrong! please try again later');
-            }
-            
-        }
-        catch(error)
-        {
-            alert('Something went wrong! please try again later');
-        }
-        
+        // const res = await axios.delete(`${deleteURL}sentbox/${sender}/${email.id}.json`);
+        sendRequest({type:'delete',URL:`${deleteURL}sentbox/${sender}/${email.id}.json`});
+        dispatch(MailsAction.deleteSentMail({email}));
     }
 
     return(    

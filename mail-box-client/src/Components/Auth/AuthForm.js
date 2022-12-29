@@ -81,7 +81,7 @@ const AuthForm = ()=>{
       //check if all fields are not empty
       if(email===''||password==='')
       {
-          alert('PLease enter login credentials');
+          alert('Please enter login credentials');
           return;
       }
       try{

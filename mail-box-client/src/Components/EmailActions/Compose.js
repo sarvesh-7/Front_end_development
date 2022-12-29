@@ -5,7 +5,8 @@ import {useRef,useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import axios from 'axios'; 
+import axios from 'axios';
+import useHttp from '../../Hooks/use-http'; 
 
 
 const Compose = (props)=>{
@@ -13,6 +14,8 @@ const Compose = (props)=>{
     //firebase realtime database URL
     const url = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com/';
     const senderEmail = localStorage.getItem('EMAIL');
+
+    const{isLoading,status,sendRequest} = useHttp();
 
     const toEmailRef = useRef();
     const subjectRef = useRef();
@@ -24,7 +27,6 @@ const Compose = (props)=>{
         event.blocks.forEach((block)=>{
             message.push(block.text);  
         })
-        console.log(message);
     };
 
     const sendEmailHandler=async()=>{
@@ -32,32 +34,15 @@ const Compose = (props)=>{
         //updat sentbox and inbox emails in firebase
         const sender = senderEmail.replace(/['@.']/g,''); 
         const receiver = toEmailRef.current.value.replace(/['@.']/g,'');
+        const date = new Date();
+        const curr_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+        const curr_time= date.getHours()+":"+date.getMinutes();
 
-        if(!receiver)
-            alert('Add atleast one recipient');
-        else if(!message)
-            alert('please add email message');
-        else{
-            try
-            {
-                const date = new Date();
-                const curr_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
-                const curr_time= date.getHours()+":"+date.getMinutes();
+        const responseHandler = (resdata)=>{
+            alert('Mail sent successfully');
 
-                const sendingRes = await axios.post(`${url}sentbox/${sender}.json`,
-                {
-                    subject:subjectRef.current.value,
-                    message,
-                    receiver : toEmailRef.current.value,
-                    sent_date : curr_date,
-                    sent_time : curr_time
-                }                
-             );
-
-             if(sendingRes.status===200)
-             {
-                const receivingRes = await axios.post(`${url}inbox/${receiver}.json`,
-                {
+            sendRequest({type:'post',URL:`${url}/inbox/${receiver}.json`,
+                body : { 
                     subject:subjectRef.current.value,
                     message,
                     sender : senderEmail,
@@ -65,19 +50,26 @@ const Compose = (props)=>{
                     sent_time : curr_time,
                     seen : false
                 }
-               );
-               if(receivingRes.status===200)
-                alert('Email sent!');
-                else
-                alert('Something went wrong! Please try again later..');
-             }
-             else
-                alert('Something went wrong! Please try again later..');
-            }
-            catch(error){
-                alert('Something went wrong! Please try again later..');
-            }  
+                }); 
+
         }
+
+        if(!receiver)
+            alert('Add atleast one recipient');
+        else if(!message)
+            alert('please add email message');
+        else{
+
+                sendRequest({type:'post',URL:`${url}/sentbox/${sender}.json`,
+                body : { 
+                    subject:subjectRef.current.value,
+                    message,
+                    receiver : toEmailRef.current.value,
+                    sent_date : curr_date,
+                    sent_time : curr_time
+                    },
+                }, responseHandler);
+            }
     }
 
     return(

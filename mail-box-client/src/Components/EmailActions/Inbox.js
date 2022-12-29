@@ -7,33 +7,22 @@ import classes from './Inbox.module.css';
 import {Route,Routes,useNavigate,Link,NavLink} from 'react-router-dom';
 import axios from 'axios';
 import {MailsAction} from '../../Store/Mails';
+import useHttp from '../../Hooks/use-http';
 
 const Inbox = ()=>{
     
     const emails = useSelector(state=>state.mails.mails);
+    // console.log(emails,'email'); 
     const deleteURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com/';
     const dispatch = useDispatch();
 
+    const{isLoading,error,sendRequest} = useHttp();
+
     const deleteMailHandler = async(email)=>{
         const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-        try
-        {
-            const res = await axios.delete(`${deleteURL}inbox/${receiver}/${email.id}.json`);
-            if(res.status===200)
-            {
-                alert('deletion successful');
-                dispatch(MailsAction.deleteMail({email}));
-            }
-            else{
-                alert('Something went wrong! please try again later');
-            }
-            
-        }
-        catch(error)
-        {
-            alert('Something went wrong! please try again later');
-        }
-        
+        // const res = await axios.delete(`${deleteURL}inbox/${receiver}/${email.id}.json`);
+        sendRequest({type:'delete',URL:`${deleteURL}inbox/${receiver}/${email.id}.json`});
+        dispatch(MailsAction.deleteMail({email}));  
     }
 
     return(    
