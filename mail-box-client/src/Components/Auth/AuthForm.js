@@ -144,7 +144,7 @@ const AuthForm = ()=>{
                 <Form.Control size="sm" className="mb-3" ref={emailRef} type="email" placeholder="Email"/>
                 <Form.Control size="sm" className="mb-3" ref={passwordRef} type="password" placeholder="Password"/>
                 {!isLogin &&  <Form.Control size="sm" className="mb-3" ref={confPasswordRef} type="password" placeholder="Confirm Password"/>}
-                {isLogin && <Link to='/'>Forgot password</Link>}
+                {isLogin && <Link to='/ForgotPassword'>Forgot password</Link>}
                 <div className="d-grid gap-2 mt-2">
                 {
                   !isLogin && 

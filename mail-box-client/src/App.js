@@ -10,6 +10,7 @@ import EmailMessage from './Components/EmailActions/EmailMessage';
 import SentEmailMessage from './Components/EmailActions/SentEmailMessage';
 import {useEffect} from 'react';
 import {authActions} from './Store/Auth';
+import ForgotPassword from './Components/Auth/ForgotPassword';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
        <> 
        <Route path="*" element = {<Navigate to='/' replace={true}/>}/>
        <Route path='/' element={<><NavBar/><AuthForm/></>}/>
+       <Route path='/ForgotPassword' element={<><NavBar/><ForgotPassword/></>}/>
        </>
      }
      {

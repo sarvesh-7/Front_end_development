@@ -8,7 +8,7 @@ import Logout from '../Components/Auth/Logout';
 import classes from './Welcome.module.css';
 import {useSelector,useDispatch} from 'react-redux';
 import {MailsAction} from '../Store/Mails';
-import {useEffect} from 'react';
+import {useEffect,useState} from 'react';
 import useHttp from '../Hooks/use-http';
 
 const Welcome = ()=>{
@@ -19,6 +19,9 @@ const Welcome = ()=>{
     const dispatch = useDispatch();
 
     const {isLoading,sendRequest} = useHttp();
+
+    //set active button between compose,inbox and sentbox buttons
+    const [activeButton,setActiveButton] = useState('Inbox');
 
     //get all mails in inbox
   useEffect(
@@ -57,15 +60,17 @@ const Welcome = ()=>{
 
     //set email action type
     const composeEmailHandler=(e)=>{
-
+        setActiveButton('Compose');
         navigate('/Welcome/Compose');
     }
 
     const InboxHandler=(e)=>{
+        setActiveButton('Inbox');
         navigate('/Welcome/Inbox');
     }
 
     const SentboxHandler=(e)=>{
+        setActiveButton('Sentbox');
         navigate('/Welcome/Sentbox');
     }
 
@@ -90,13 +95,16 @@ const Welcome = ()=>{
             <Row>
                 <Col lg={2}>
                 <div className="d-grid mb-2">
-                    <Button onClick={composeEmailHandler}>Compose</Button>
+                    <Button variant = {activeButton==='Compose' ? 'primary' : 'outline-primary'}
+                     onClick={composeEmailHandler}>Compose</Button>
                 </div>
                 <div className="d-grid mb-2">
-                    <Button onClick={InboxHandler}>Inbox</Button>
+                    <Button variant = {activeButton==='Inbox' ? 'primary' : 'outline-primary'} 
+                    onClick={InboxHandler}>Inbox</Button>
                 </div>
                 <div className="d-grid mb-2">
-                    <Button onClick={SentboxHandler}>Sentbox</Button>
+                    <Button variant = {activeButton==='Sentbox' ? 'primary' : 'outline-primary'} 
+                    onClick={SentboxHandler}>Sentbox</Button>
                 </div>
                 <div>
                     Unseen Messages : {unSeenMailsCount}
