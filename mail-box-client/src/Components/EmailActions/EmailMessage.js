@@ -1,5 +1,4 @@
 import {useLocation} from 'react-router-dom';
-import axios from 'axios';
 import {MailsAction} from '../../Store/Mails';
 import {useDispatch} from 'react-redux';
 import {useEffect} from 'react';
@@ -15,29 +14,21 @@ const EmailMessage = ()=>{
 
     const dispatch = useDispatch();
 
-    const{isLoading,status,sendRequest} = useHttp();
+    const{isLoading,sendRequest} = useHttp();
 
     useEffect(()=>{
         const markEmailsAsSeen = async()=>{
             const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-            const updatedEmail = {
-                id: email.id ,
-                sender:email.sender,
-                subject:email.subject,
-                message:email.message,
-                sent_date:email.sent_date,
-                sent_time:email.sent_time,
+            const seenObj = {
                 seen:true
             }
-            sendRequest({type:'put',URL:`${putURL}/inbox/${receiver}/${email.id}.json`,
-            body : updatedEmail
+            sendRequest({type:'patch',URL:`${putURL}/inbox/${receiver}/${email.id}.json`,
+            body : seenObj
             });
-            // const res = await axios.put(`${putURL}/inbox/${receiver}/${email.id}.json`,updatedEmail);
-            // console.log(res);
-            dispatch(MailsAction.editMail({email : updatedEmail}));
+            dispatch(MailsAction.markEmailsAsSeen(email.id));
         }
     markEmailsAsSeen();
-    },[dispatch,putURL,email]     
+    },[dispatch,putURL,email,sendRequest]     
     )
 
 return(

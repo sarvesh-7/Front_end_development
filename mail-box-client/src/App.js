@@ -1,4 +1,3 @@
-import './App.css';
 import NavBar from './Components/Layout/NavigationBar';
 import AuthForm from './Components/Auth/AuthForm';
 import {Routes,Route,Navigate} from 'react-router-dom';
@@ -14,7 +13,6 @@ import {authActions} from './Store/Auth';
 
 function App() {
 
-  const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
   const dispatch = useDispatch();
 
   //make login state persistant
@@ -42,7 +40,7 @@ function App() {
      {
        token && 
        <>
-       <Route path='/' element = {<Navigate to='/Welcome' replace={true}/>}/>
+       <Route path='/' element = {<Navigate to='/Welcome/Inbox' replace={true}/>}/>
        
        <Route path="/Welcome" element={<Welcome/>}>
          <Route path="/Welcome/Compose" element={<Compose/>} />

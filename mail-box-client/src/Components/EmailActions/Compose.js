@@ -1,11 +1,10 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import classes from './Compose.module.css';
-import {useRef,useState} from 'react';
+import {useRef} from 'react';
 import Form from 'react-bootstrap/Form';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import axios from 'axios';
 import useHttp from '../../Hooks/use-http'; 
 
 
@@ -15,7 +14,7 @@ const Compose = (props)=>{
     const url = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com/';
     const senderEmail = localStorage.getItem('EMAIL');
 
-    const{isLoading,status,sendRequest} = useHttp();
+    const{isLoading,sendRequest} = useHttp();
 
     const toEmailRef = useRef();
     const subjectRef = useRef();

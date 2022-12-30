@@ -1,26 +1,22 @@
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {useDispatch,useSelector} from 'react-redux';
 import classes from './Inbox.module.css';
-import {Route,Routes,useNavigate,Link,NavLink} from 'react-router-dom';
-import axios from 'axios';
+import {NavLink} from 'react-router-dom';
 import {MailsAction} from '../../Store/Mails';
 import useHttp from '../../Hooks/use-http';
 
 const Inbox = ()=>{
     
     const emails = useSelector(state=>state.mails.mails);
-    // console.log(emails,'email'); 
     const deleteURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com/';
     const dispatch = useDispatch();
 
-    const{isLoading,error,sendRequest} = useHttp();
+    const{isLoading,sendRequest} = useHttp();
 
     const deleteMailHandler = async(email)=>{
         const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-        // const res = await axios.delete(`${deleteURL}inbox/${receiver}/${email.id}.json`);
         sendRequest({type:'delete',URL:`${deleteURL}inbox/${receiver}/${email.id}.json`});
         dispatch(MailsAction.deleteMail({email}));  
     }

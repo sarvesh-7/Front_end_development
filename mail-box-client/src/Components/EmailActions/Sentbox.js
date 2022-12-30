@@ -1,11 +1,9 @@
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {useDispatch,useSelector} from 'react-redux';
 import classes from './Inbox.module.css';
-import {Route,Routes,useNavigate,Link,NavLink} from 'react-router-dom';
-import axios from 'axios';
+import {NavLink} from 'react-router-dom';
 import {MailsAction} from '../../Store/Mails';
 import {useEffect} from 'react';
 import useHttp from '../../Hooks/use-http';
@@ -16,13 +14,13 @@ const Sentbox = ()=>{
     const deleteURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com/';
     const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
     const dispatch = useDispatch();
-    const {isLoading,error,sendRequest} = useHttp();
+    const {isLoading,sendRequest} = useHttp();
 
+    //get sent emails
     useEffect(
         ()=>{
             const transformMails=(email)=>{
                 let emailsArr = [];
-                console.log('received mails', email);
                 for(const key in email)
                 {
                     emailsArr.push(
@@ -35,18 +33,16 @@ const Sentbox = ()=>{
                         sent_time:email[key].sent_time,
                     });
                 } 
-                console.log(emailsArr, 'sentbox');
-                dispatch(MailsAction.addSentMails({mails : emailsArr}));
+                dispatch(MailsAction.addSentMails({mails : emailsArr.reverse()}));
             }
             const sender = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-            // const res = await axios.get(`${getURL}/sentbox/${sender}.json`);
             sendRequest({type:'get',URL:`${getURL}/sentbox/${sender}.json`},transformMails); 
         },[dispatch,getURL,sendRequest]
     )
 
+    //delete mails from sentbox
     const deleteMailHandler = async(email)=>{
         const sender = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
-        // const res = await axios.delete(`${deleteURL}sentbox/${sender}/${email.id}.json`);
         sendRequest({type:'delete',URL:`${deleteURL}sentbox/${sender}/${email.id}.json`});
         dispatch(MailsAction.deleteSentMail({email}));
     }

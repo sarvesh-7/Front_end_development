@@ -7,7 +7,6 @@ import {useNavigate,Outlet} from 'react-router-dom';
 import Logout from '../Components/Auth/Logout';
 import classes from './Welcome.module.css';
 import {useSelector,useDispatch} from 'react-redux';
-import axios from 'axios';
 import {MailsAction} from '../Store/Mails';
 import {useEffect} from 'react';
 import useHttp from '../Hooks/use-http';
@@ -19,14 +18,13 @@ const Welcome = ()=>{
     const getURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
     const dispatch = useDispatch();
 
-    const {isLoading, error, sendRequest} = useHttp();
+    const {isLoading,sendRequest} = useHttp();
 
     //get all mails in inbox
   useEffect(
     ()=>{
     const transformMails = (emails)=>{
         let emailsArr = [];
-        // console.log(emails);
         for(const key in emails)
         {
             emailsArr.push(
@@ -39,25 +37,27 @@ const Welcome = ()=>{
                 sent_time:emails[key].sent_time,
                 seen:emails[key].seen
             });
-        }
-        // console.log(emailsArr); 
-        dispatch(MailsAction.addMails({mails : emailsArr}));
+        };
+        //reverse array to get latest emails on top and then update in redux store
+        dispatch(MailsAction.addMails({mails : emailsArr.reverse()}));
     }
 
-        // const getEmailsInterval = setInterval(async()=>
-        // {
-        //   console.log('my interval', getEmailsInterval);
+    //make API calls after every 2 seconds to get latest emails in inbox
+        const getEmailsInterval = setInterval(async()=>
+        {
+          console.log('my interval', getEmailsInterval);
           const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
           sendRequest({type : 'get' , URL:`${getURL}/inbox/${receiver}.json`}, transformMails);
-        //   },
-        // 2000);
+          },
+        2000);
 
-        // return ()=> clearInterval(getEmailsInterval); 
+        return ()=> clearInterval(getEmailsInterval); 
     },[dispatch,getURL,sendRequest]
 );
 
     //set email action type
     const composeEmailHandler=(e)=>{
+
         navigate('/Welcome/Compose');
     }
 

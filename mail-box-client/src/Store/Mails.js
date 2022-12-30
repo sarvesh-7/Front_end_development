@@ -1,5 +1,5 @@
 import {createSlice,current} from '@reduxjs/toolkit';
-// import {current} from 'react-redux';
+
 const initialMailState = {
     mails : [],
     sentBox : []
@@ -14,10 +14,10 @@ const MailsSlice = createSlice(
             addMails(state,action){
                 state.mails = action.payload.mails;
             },
-            editMail(state,action){
+            markEmailAsSeen(state,action){
                 let mailsArr = state.mails;
-                const index = mailsArr.findIndex((mail)=>mail.id===action.payload.email.id);
-                mailsArr[index] = action.payload.email;
+                const index = mailsArr.findIndex((mail)=>mail.id===action.payload);
+                mailsArr[index].seen = true;
                 state.mails = mailsArr;
             },
             deleteMail(state,action){

@@ -23,11 +23,12 @@ const AuthForm = ()=>{
 
     const signupHandler=async(e)=>{
         e.preventDefault();
+        
         //get email and password entered on screen
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
         const confPasword = confPasswordRef.current.value;
-        // Signup(email,password,confPassword);
+  
         //check if all fields are not empty
       if(email===''||password===''||confPasword==='')
       {

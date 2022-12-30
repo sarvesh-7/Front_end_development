@@ -1,13 +1,8 @@
 import {useLocation} from 'react-router-dom';
-import axios from 'axios';
-import {MailsAction} from '../../Store/Mails';
-import {useDispatch} from 'react-redux';
-import {useEffect} from 'react';
 import Card from 'react-bootstrap/Card';
 
 const SentEmailMessage = ()=>{
     const location = useLocation();
-    console.log(location);
     const {email} = location.state;
 
 return(
