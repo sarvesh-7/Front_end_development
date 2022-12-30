@@ -11,6 +11,8 @@ import SentEmailMessage from './Components/EmailActions/SentEmailMessage';
 import {useEffect} from 'react';
 import {authActions} from './Store/Auth';
 import ForgotPassword from './Components/Auth/ForgotPassword';
+import Footer from './Components/Layout/Footer';
+import './App.css';
 
 function App() {
 
@@ -30,6 +32,8 @@ function App() {
   const token = useSelector(state=>state.auth.token);
 
   return (
+    <div className='flex-div'>
+      <div>
      <Routes>
      {
        !token &&
@@ -54,6 +58,11 @@ function App() {
        </>
      }
      </Routes>
+     </div>
+     <div>
+     <Footer/>
+     </div>
+     </div>
   );
 }
 

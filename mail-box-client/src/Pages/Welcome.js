@@ -112,7 +112,7 @@ const Welcome = ()=>{
                 </Col>
                 <Col lg={10}>
                     {
-                        <Card>
+                        <Card className={classes.shadow}>
                         <Card.Body>
                         <Outlet/>
                         </Card.Body>

@@ -45,7 +45,7 @@ const ForgotPassword = ()=>{
     <Container>
     <Row>
     <Col lg={5} className={`${classes.forgotPassword} mt-5`}>
-    <Card border='primary' className='p-3'>
+    <Card border='primary' className={`${classes.card} p-3`}>
         <Form>
         <Form.Label forhtml='email'>Enter the email with which you have registered</Form.Label>
         <Form.Control type='email' id='email' placeholder='email' ref={emailRef}/>

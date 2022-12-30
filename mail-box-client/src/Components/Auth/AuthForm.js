@@ -134,7 +134,7 @@ const AuthForm = ()=>{
         <Container className='m-5'>
         <Row>
         <Col className={classes.authForm } lg={4} sm={8} md={6}>
-        <Card className="p-2">
+        <Card className={`${classes.card} p-2`}>
         { !isLogin && <Card.Title className="m-auto">Sign up</Card.Title>}
         { isLogin && <Card.Title className="m-auto">Login</Card.Title>}
         
@@ -159,7 +159,7 @@ const AuthForm = ()=>{
         </Form>
         </Card.Body>
         </Card>
-        <Card className="mt-2">
+        <Card className={`${classes.card} mt-2`}>
         { !isLogin && <Button onClick={switchAuthHandler}>Have an account?Login</Button> }
         { isLogin && <Button onClick={switchAuthHandler}>Dont Have an account?Signup</Button> }
         </Card>
