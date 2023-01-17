@@ -7,7 +7,6 @@ import useHttp from '../../Hooks/use-http';
 
 const EmailMessage = ()=>{
     const location = useLocation();
-    console.log(location);
     const {email} = location.state;
 
     const putURL = 'https://mail-box-client-fcae9-default-rtdb.firebaseio.com';
@@ -16,6 +15,7 @@ const EmailMessage = ()=>{
 
     const{isLoading,sendRequest} = useHttp();
 
+    //mark emails as seen if we click on it
     useEffect(()=>{
         const markEmailsAsSeen = async()=>{
             const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');

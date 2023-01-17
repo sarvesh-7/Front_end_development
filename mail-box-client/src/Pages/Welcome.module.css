@@ -9,3 +9,7 @@
 .shadow{
     box-shadow: 1px 2px 9px grey;
 }
+
+.right_aligned{
+    justify-content: flex-end;
+}

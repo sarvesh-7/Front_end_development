@@ -72,6 +72,11 @@ const Sentbox = ()=>{
                     <hr/></>
                     })
                 }
+                { (!emails || emails.length === 0) && <Row>
+                    <Col xs={12}>
+                    {<h4 style={{textAlign:'center'}}>No emails to show..</h4>}
+                    </Col>
+                    </Row>}
                 </Container>
     )
 };

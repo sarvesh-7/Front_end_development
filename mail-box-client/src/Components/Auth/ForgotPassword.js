@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-// import LoadingSpinner from '../UI/LoadingSpinner';
 import { useRef,useState } from 'react';
 import useHttp from '../../Hooks/use-http';
 
@@ -42,9 +41,9 @@ const ForgotPassword = ()=>{
     }
 
     return(
-    <Container>
+    <Container fluid>
     <Row>
-    <Col lg={5} className={`${classes.forgotPassword} mt-5`}>
+    <Col lg={5} xs={8} xl={5} xxl={5} className={`${classes.forgotPassword} mt-5`}>
     <Card border='primary' className={`${classes.card} p-3`}>
         <Form>
         <Form.Label forhtml='email'>Enter the email with which you have registered</Form.Label>

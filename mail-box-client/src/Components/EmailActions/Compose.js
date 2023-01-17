@@ -21,6 +21,7 @@ const Compose = (props)=>{
 
     let message;
 
+    //get email content entered by user
     const getEmailMsgHandler=(event)=>{
         message = [];
         event.blocks.forEach((block)=>{

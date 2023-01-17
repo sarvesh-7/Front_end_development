@@ -2,21 +2,23 @@ import NavBar from './Components/Layout/NavigationBar';
 import AuthForm from './Components/Auth/AuthForm';
 import {Routes,Route,Navigate} from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
-import Welcome from './Pages/Welcome';
-import Inbox from './Components/EmailActions/Inbox';
-import Sentbox from './Components/EmailActions/Sentbox';
-import Compose from './Components/EmailActions/Compose';
-import EmailMessage from './Components/EmailActions/EmailMessage';
-import SentEmailMessage from './Components/EmailActions/SentEmailMessage';
-import {useEffect} from 'react';
+import {useEffect,Suspense,lazy} from 'react';
 import {authActions} from './Store/Auth';
-import ForgotPassword from './Components/Auth/ForgotPassword';
 import Footer from './Components/Layout/Footer';
 import './App.css';
 
 function App() {
 
   const dispatch = useDispatch();
+
+  //lazy load below react components except auth form , navbar and footer
+  const Welcome = lazy(()=>import('./Pages/Welcome'));
+  const Sentbox = lazy(()=>import('./Components/EmailActions/Sentbox'));
+  const Compose = lazy(()=>import('./Components/EmailActions/Compose'));
+  const Inbox = lazy(()=>import('./Components/EmailActions/Inbox'));
+  const EmailMessage = lazy(()=>import('./Components/EmailActions/EmailMessage'));
+  const SentEmailMessage = lazy(()=>import('./Components/EmailActions/SentEmailMessage'));
+  const ForgotPassword = lazy(()=>import('./Components/Auth/ForgotPassword'));
 
   //make login state persistant
   useEffect(()=>{
@@ -34,6 +36,7 @@ function App() {
   return (
     <div className='flex-div'>
       <div>
+        <Suspense fallback={<p>Loading..</p>}>
      <Routes>
      {
        !token &&
@@ -58,6 +61,7 @@ function App() {
        </>
      }
      </Routes>
+     </Suspense>
      </div>
      <div>
      <Footer/>

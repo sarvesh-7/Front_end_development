@@ -4,12 +4,13 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {useNavigate,Outlet} from 'react-router-dom';
-import Logout from '../Components/Auth/Logout';
-import classes from './Welcome.module.css';
 import {useSelector,useDispatch} from 'react-redux';
 import {MailsAction} from '../Store/Mails';
 import {useEffect,useState} from 'react';
 import useHttp from '../Hooks/use-http';
+import classes from './Welcome.module.css';
+
+import WelcomeHeader from '../Components/Layout/WelcomeHeader';
 
 const Welcome = ()=>{
     const navigate = useNavigate();
@@ -87,13 +88,10 @@ const Welcome = ()=>{
     
     return(
         <>
-        <div className={classes.header}>
-        <h3>Welcome to your Mail Box</h3>
-        <Logout/>
-        </div>
-        <Container>
+        <WelcomeHeader/>
+        <Container fluid>
             <Row>
-                <Col lg={2}>
+                <Col md={2} sm={3} >
                 <div className="d-grid mb-2">
                     <Button variant = {activeButton==='Compose' ? 'primary' : 'outline-primary'}
                      onClick={composeEmailHandler}>Compose</Button>
@@ -110,7 +108,7 @@ const Welcome = ()=>{
                     Unseen Messages : {unSeenMailsCount}
                 </div>
                 </Col>
-                <Col lg={10}>
+                <Col md = {10} sm={9} xs={12}>
                     {
                         <Card className={classes.shadow}>
                         <Card.Body>

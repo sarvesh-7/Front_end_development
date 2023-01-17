@@ -15,6 +15,7 @@ const Inbox = ()=>{
 
     const{isLoading,sendRequest} = useHttp();
 
+    //delete emails from inbox
     const deleteMailHandler = async(email)=>{
         const receiver = localStorage.getItem('EMAIL').replace(/['@.']/g,'');
         sendRequest({type:'delete',URL:`${deleteURL}inbox/${receiver}/${email.id}.json`});
@@ -22,19 +23,16 @@ const Inbox = ()=>{
     }
 
     return(    
-                <Container>
+                <Container fluid>
                 {
                     emails &&
                     emails.map((email)=>{
-                        return <>
+                        return <ul key={email.id} style={{listStyle:'none', padding:0}}>
                         <Row key={email.id} className={`${classes.row} ${!email.seen && 'fw-bold'}`}>
                             <Col lg={11}>
                             <NavLink className={classes.mailBox} to={`/Welcome/Inbox/${email.id}`} state={{email : email}}>
                             <Row>
                             <Col lg={8}>
-                            {!email.seen &&  
-                            <i class="fa fa-circle" style={{fontSize:'10px', color:'blue', marginRight:'1rem'}}></i>
-                            }
                             {email.sender}<br/>
                             {email.subject}
                             </Col>
@@ -45,10 +43,15 @@ const Inbox = ()=>{
                             
                             <Col lg={1}><i class="fa fa-trash" onClick={()=>deleteMailHandler(email)}></i></Col>   
                         </Row>
-                    
-                    <hr/></>
+                    <hr/></ul>
                     })
                 }
+                { (!emails || emails.length === 0) && <Row>
+                    <Col xs={12}>
+                    {<h4 style={{textAlign:'center'}}>No emails to show..</h4>}
+                    </Col>
+                    </Row>}
+                
                 </Container>
     )
 };
