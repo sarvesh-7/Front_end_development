@@ -10,6 +10,7 @@ import {Link} from 'react-router-dom';
 import {authActions} from '../../Store/Auth';
 import {useDispatch} from 'react-redux';
 
+
 const AuthForm = ()=>{
 
     const emailRef = useRef();
@@ -109,6 +110,14 @@ const AuthForm = ()=>{
           //update in local storage
           localStorage.setItem('EMAIL',email);
           localStorage.setItem('TOKEN', data.idToken);
+
+          //auto - logout after 5 secs
+          setTimeout(()=>{
+            localStorage.removeItem('EMAIL');
+            localStorage.removeItem('TOKEN');
+            dispatch(authActions.updateAuthInfo({token:'',email:''}));
+          },1000*6000);
+
         }
         else{
           //if credentials are wrong

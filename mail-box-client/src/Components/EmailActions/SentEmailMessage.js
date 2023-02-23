@@ -14,9 +14,10 @@ return(
     </Card.Header>
     <Card.Body>
     {
-        email.message.map((data)=>{
-            return <div>{data}</div>
-        })
+        // email.message.map((data)=>{
+        //     return <div>{data}</div>
+        // })
+        <div dangerouslySetInnerHTML={{__html: email.message}}/>
     }
     </Card.Body>
     </>

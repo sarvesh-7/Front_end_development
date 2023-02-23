@@ -1,9 +1,10 @@
 import {useLocation} from 'react-router-dom';
 import {MailsAction} from '../../Store/Mails';
 import {useDispatch} from 'react-redux';
-import {useEffect} from 'react';
+import {useEffect,useRef} from 'react';
 import Card from 'react-bootstrap/Card';
 import useHttp from '../../Hooks/use-http';
+import htmlToDraft from 'html-to-draftjs';
 
 const EmailMessage = ()=>{
     const location = useLocation();
@@ -31,6 +32,10 @@ const EmailMessage = ()=>{
     },[dispatch,putURL,email,sendRequest]     
     )
 
+    const div = document.createElement('div');
+    div.innerHTML = email.message;
+    console.log(div);
+
 return(
     <>
     <Card.Header>
@@ -40,9 +45,10 @@ return(
     </Card.Header>
     <Card.Body>
     {
-        email.message.map((data)=>{
-            return <div>{data}</div>
-        })
+        // email.message.map((data)=>{
+        //     return <div>{data}</div>
+        // })
+    <div dangerouslySetInnerHTML={{__html: email.message}}/>
     }
     </Card.Body>
     </>
